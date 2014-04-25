@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'polls',
+    'bookings',
     # ---------------------------
     # ALLAUTH
     # ---------------------------
@@ -76,7 +76,7 @@ DATABASES = my_database.MY_DATABASE
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Stockholm'
 
 USE_I18N = True
 
@@ -89,6 +89,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'mysite/static')]
 
 
 # --------------------------------
@@ -115,6 +117,10 @@ AUTHENTICATION_BACKENDS = (
     # `allauth` specific authentication methods, such as login by e-mail
     "allauth.account.auth_backends.AuthenticationBackend",
 )
+
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'mysite/templates')]
+
+LOGIN_REDIRECT_URL = '/'
 
 SITE_ID = 2
 

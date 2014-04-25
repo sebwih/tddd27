@@ -1,0 +1,24 @@
+<html>
+<body>
+{% if request.user.is_authenticated %}
+
+Welcome {{request.user.first_name}}
+<a href="/logout">Log out</a>
+	{% if user_lvl == '1' %}
+		<br>
+		LEVEL 1
+
+	{% else %}
+		<br>
+		LEVEL 2
+	{% endif %}
+
+{% else %}
+	{% load staticfiles %}
+	<a href="/accounts/google/login/?process=login">
+		<img src="{% static "Red-signin-Long-base-44dp.png" %}" width="246" height="54" alt="Sign in button">
+	</a>
+{% endif %}
+
+</body>
+</html>
