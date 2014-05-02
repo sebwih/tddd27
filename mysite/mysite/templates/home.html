@@ -1,4 +1,7 @@
 <html>
+{% load staticfiles %}
+<head>
+</head>
 <body>
 {% if request.user.is_authenticated %}
 
@@ -14,10 +17,20 @@ Welcome {{request.user.first_name}}
 	{% endif %}
 
 {% else %}
-	{% load staticfiles %}
 	<a href="/accounts/google/login/?process=login">
 		<img src="{% static "Red-signin-Long-base-44dp.png" %}" width="246" height="54" alt="Sign in button">
 	</a>
+
+	<form class="login" method="POST" action="/login_local/">
+	{% csrf_token %}
+  	<p><label for="id_login">Username:</label> 
+  		<input autofocus="autofocus" id="id_login" maxlength="30" name="username" placeholder="Username" type="text"/></p>
+	<p><label for="id_password">Password:</label> 
+		<input id="id_password" name="password" placeholder="Password" type="password"/></p>
+  		<button class="primaryAction" type="submit">Sign In</button>
+	</form>
+
+
 {% endif %}
 
 </body>

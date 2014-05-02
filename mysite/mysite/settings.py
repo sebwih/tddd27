@@ -7,6 +7,8 @@ https://docs.djangoproject.com/en/1.6/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
+# if sql problems
+# export DYLD_LIBRARY_PATH=/usr/local/mysql-5.6.10-osx10.6-x86_64/lib/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
