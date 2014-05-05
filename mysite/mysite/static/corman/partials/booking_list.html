@@ -1,0 +1,17 @@
+<div class="col-md-2">
+        Search: <input ng-model="query">
+
+  		<select ng-model="orderProp">
+    	<option value="start">Alphabetical</option>
+    	<option value="age">Newest</option>
+  		</select>
+    </div>
+
+  <ul>
+    <li ng-repeat="booking in bookings.data | filter:query | orderBy:orderProp">
+    	<a href="#/bookings/{{booking.id}}">{{booking.start}}</a>
+      	<p>{{booking.end}}</p>
+    </li>
+  </ul>
+  <br>
+  <a href="#/new_reservation">Ny bokning</a>

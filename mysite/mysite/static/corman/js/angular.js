@@ -7306,7 +7306,6 @@ function $HttpProvider() {
       JSON_END = /[\}\]]\s*$/,
       PROTECTION_PREFIX = /^\)\]\}',?\n/,
       CONTENT_TYPE_APPLICATION_JSON = {'Content-Type': 'application/json;charset=utf-8'};
-
   var defaults = this.defaults = {
     // transform incoming response data
     transformResponse: [function(data) {

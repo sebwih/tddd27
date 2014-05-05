@@ -1,0 +1,10 @@
+<p>reservation site</p>
+<form method="post" action="/create_booking/">
+	<select name="resource">
+		<option ng-repeat="resource in resources.data" value="{{resource.id}}">{{resource.name}}</options>
+	</select><br>
+	Start date: <input type="date" name="start_date"><input type="time" name="start_time"><br>
+	End date: <input type="date" name="end_date"><input type="time" name="end_time"><br>
+	<input type="text" name="msg"><br>
+	<input type="submit" valute="Boka" name="reservation_button">
+</form>

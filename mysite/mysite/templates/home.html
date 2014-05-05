@@ -1,30 +1,73 @@
-<html>
+<html ng-app>
 {% load staticfiles %}
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.7/angular.min.js"></script>
 </head>
 <body>
 {% if request.user.is_authenticated %}
 
-Welcome {{request.user.first_name}}
-<a href="/logout">Log out</a>
-	{% if user_lvl == '1' %}
-		<br>
-		LEVEL 1
+	Welcome {{request.user.first_name}}
+	<a href="/logout">Log out</a>
 
-	{% else %}
-		<br>
-		LEVEL 2
-	{% endif %}
+		{% if user_lvl == '1' %}
+			<br>
+			LEVEL 1
+			<br>
+			<ul>
+			{% for booking in bookings %}
+				<li>{{booking.start}}</li>
+			{% endfor %}
+			</ul>
+
+		{% else %}
+			<br>
+			LEVEL 2
+			<br>
+			<ul>
+			{% for booking in bookings %}
+				<li>{{booking.start}}</li>
+			{% endfor %}
+			</ul>
+		{% endif %}
 
 {% else %}
 	<a href="/accounts/google/login/?process=login">
-		<img src="{% static "Red-signin-Long-base-44dp.png" %}" width="246" height="54" alt="Sign in button">
+		<img src="{% static "Red-signin-Long-base-44dp.png" %}" 
+			onmouseover="this.src='{% static "Red-signin-Long-hover-44dp.png" %}'" 
+			onmouseout="this.src='{% static "Red-signin-Long-base-44dp.png" %}'"
+			onclick="this.src='{% static "Red-signin-Long-press-44dp.png" %}'"
+			width="246" height="54" alt="Sign in button">
 	</a>
+
+	<div ng-init="blubb=false">
+  	<label>
+    <button ng-click="blubb=true" ng-show="!blubb">sign up</button>
+ 	 </label>
+  	<div ng-show="blubb">
+   		<form class="signup" id="signup_form" method="post" action="/usrname/">
+  		{% csrf_token %}
+  		<label for="id_username"></label> 
+  			<input id="id_username" maxlength="30" name="username" placeholder="Username" type="text" /><br>
+		<label for="id_email"></label>
+			<input id="id_email" name="email" placeholder="E-mail address" type="text"/><br>
+		<label for="id_first_name"></label>
+			<input id="id_first_name" name="first_name" placeholder="First name" type="text"/><br>
+		<label for="id_last_name"></label>
+			<input id="id_last_name" name="last_name" placeholder="Last name" type="text"/><br>
+		<label for="id_password1"></label>
+			<input id="id_password1" name="password1" placeholder="Password" type="password"/><br>
+		<label for="id_password2"></label>
+			<input id="id_password2" name="password2" placeholder="Retype password" type="password"/><br>
+		<!-- <input id="id_confirmation_key" name="confirmation_key" type="hidden" /></p> -->
+  			<input type="submit" value="Sign Up &raquo;">
+		</form>
+  	</div>
+	</div>
 
 	<form class="login" method="POST" action="/login_local/">
 	{% csrf_token %}
   	<p><label for="id_login">Username:</label> 
-  		<input autofocus="autofocus" id="id_login" maxlength="30" name="username" placeholder="Username" type="text"/></p>
+  		<input id="id_login" maxlength="30" name="username" placeholder="Username" type="text"/></p>
 	<p><label for="id_password">Password:</label> 
 		<input id="id_password" name="password" placeholder="Password" type="password"/></p>
   		<button class="primaryAction" type="submit">Sign In</button>
