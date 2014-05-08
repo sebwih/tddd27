@@ -11,7 +11,7 @@ import json
 import datetime
 
 def dict_builder(not_seri_dict):
-	seri_dict = {}
+ 	seri_dict = {}
 	for list_elem in not_seri_dict:
 		for elem in list_elem:
 			seri_dict[elem] = list_elem[elem]
@@ -46,8 +46,19 @@ def get_bookings(request):
 def get_resources(request):
 	response = {}
 	response['success'] = True
-	response['data'] = list(Resource.objects.values('name','id'))
-	print response['data']
+	response['data'] = list(Resource.objects.values('name','id','description'))
+	return HttpResponse(json.dumps(response), content_type="application/json")
+
+@csrf_exempt
+def get_resource_bookings(request):
+	obj = json.loads(request.body)
+	resource = Resource.objects.get(id=obj["id"])
+	bookings = Booking.objects.filter(resource=resource)
+	from django.core import serializers
+	response = {}
+	response['success'] = True
+	response['data'] = json.loads(serializers.serialize("json", bookings))
+	print HttpResponse(json.loads(serializers.serialize("json", bookings)))
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
 @csrf_exempt
@@ -68,9 +79,6 @@ def create_booking(request):
 	b = Booking(resource=resource,user=User.objects.get(id=2),start_date=start_date,start_time=start_time,end_date=end_date,end_time=end_time,message=msg)
 	b.save()
 	return HttpResponse("")
-
-
-
 
 
 @csrf_exempt

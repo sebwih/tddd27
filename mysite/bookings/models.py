@@ -14,6 +14,7 @@ class Booking(models.Model):
 		return self.message
 	resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
 	user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
+	# ANDRA TILL DATEFIELD OCH TIME FIELD ISTALLET FOR DATETIMEFIELD?
 	booked = models.DateTimeField(auto_now_add=True)
 	start_date = models.DateField('start date')
 	start_time = models.TimeField('start time')

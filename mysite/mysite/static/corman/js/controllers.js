@@ -21,3 +21,16 @@ cormanControllers.controller('ReservationCtrl', function ($scope, $http) {
       $scope.resources = data;
     });
  });
+
+cormanControllers.controller('ResourceListCtrl', function ($scope, $http){
+    $http.get('/get_resources').success(function(data){
+      $scope.resources = data;
+    });
+});
+
+cormanControllers.controller('ResourceDetailCtrl', function ($scope, $routeParams,$http){
+    $scope.resourceId = $routeParams.resourceId;
+  $http.post('/get_resource_bookings/',{"id":$routeParams.resourceId}).success(function(data){
+    $scope.resource_bookings = data;
+  });  
+});

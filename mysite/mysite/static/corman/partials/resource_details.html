@@ -1,0 +1,9 @@
+<h1>{{resourceId}}</h1>
+
+<ul>
+  <li ng-repeat="resource in resource_bookings.data">
+    <p>Start: {{resource.fields.start_date}} {{resource.fields.start_time}}</p>
+    <p>End: {{resource.fields.end_date}} {{resource.fields.end_time}}</p>
+    <p>Message: {{resource.fields.message}}</p>
+  </li>
+</ul>

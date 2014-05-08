@@ -20,5 +20,6 @@ urlpatterns = patterns('',
     url(r'^get_resources/', 'mysite.views.get_resources', name='get_resources'),
     url(r'^create_booking/', 'mysite.views.create_booking', name='create_booking'),
     url(r'^get_booking_details/', 'mysite.views.get_booking_details', name='get_booking_details'),
+    url(r'^get_resource_bookings/', 'mysite.views.get_resource_bookings', name='get_resource_bookings'),
     url(r'^/static/corman/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_DOC_ROOT}),
 )

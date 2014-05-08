@@ -1,0 +1,15 @@
+<div class="col-md-2">
+  Search: <input ng-model="query">
+  <select ng-model="orderProp">
+    <option value="start">Alphabetical</option>
+    <option value="age">Newest</option>
+  </select>
+</div>
+
+<ul>
+  <li ng-repeat="resource in resources.data | filter:query | orderBy:orderProp">
+    <a href="#/resources/{{resource.id}}">{{resource.name}}</a>
+    <p>{{resource.description}}</p>
+  </li>
+</ul>
+<br>

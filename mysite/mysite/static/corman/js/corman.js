@@ -18,7 +18,15 @@ cormanApp.config(['$routeProvider',
       	templateUrl: 'partials/reservation.html',
         controller: 'ReservationCtrl'
       }).
+      when('/resources', {
+        templateUrl: 'partials/resource_list.html',
+        controller: 'ResourceListCtrl'
+      }).
+      when('/resources/:resourceId', {
+        templateUrl: 'partials/resource_details.html',
+        controller: 'ResourceDetailCtrl'        
+      }).
       otherwise({
-        redirectTo: '/bookings'
+        redirectTo: '/resources'
       });
   }]);
