@@ -2,23 +2,8 @@
 
 <p>{{booking.data.message}}</p>
 
-<!-- <ul class="phone-thumbs">
-  <li ng-repeat="img in phone.images">
-    <img ng-src="{{img}}">
-  </li>
-</ul>
-
-<ul class="specs">
-  <li>
-    <span>Availability and Networks</span>
-    <dl>
-      <dt>Availability</dt>
-      <dd ng-repeat="availability in phone.availability">{{availability}}</dd>
-    </dl>
-  </li>
-    ...
-  <li>
-    <span>Additional Features</span>
-    <dd>{{phone.additionalFeatures}}</dd>
-  </li>
-</ul> -->
+<form method="post" action="/remove_booking/" accept-charset="UTF-8">
+  <input type="hidden" name="booking_id" value="{{bookingId}}">
+  <input type="hidden" name="resource_name" value="{{resourceName}}">
+  <input type="submit" value="Avboka" name="unreservation_button">
+</form>

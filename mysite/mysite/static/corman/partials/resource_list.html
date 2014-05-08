@@ -1,5 +1,5 @@
 <div class="col-md-2">
-  Search: <input ng-model="query">
+  Search: <input ng-model="query.name">
   <select ng-model="orderProp">
     <option value="start">Alphabetical</option>
     <option value="age">Newest</option>
@@ -8,7 +8,7 @@
 
 <ul>
   <li ng-repeat="resource in resources.data | filter:query | orderBy:orderProp">
-    <a href="#/resources/{{resource.id}}">{{resource.name}}</a>
+    <a href="#/resources/{{resource.name}}">{{resource.name}}</a>
     <p>{{resource.description}}</p>
   </li>
 </ul>

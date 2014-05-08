@@ -52,19 +52,18 @@ def get_resources(request):
 @csrf_exempt
 def get_resource_bookings(request):
 	obj = json.loads(request.body)
-	resource = Resource.objects.get(id=obj["id"])
+	resource = Resource.objects.get(name=obj["name"])
 	bookings = Booking.objects.filter(resource=resource)
 	from django.core import serializers
 	response = {}
-	response['success'] = True
+	response['success'] = True	
 	response['data'] = json.loads(serializers.serialize("json", bookings))
-	print HttpResponse(json.loads(serializers.serialize("json", bookings)))
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
 @csrf_exempt
 def create_booking(request):
 	resource = request.POST['resource']
-	resource = Resource.objects.get(id=resource)
+	resource = Resource.objects.get(name=resource)
 	msg = request.POST['msg']
 	start_date = request.POST['start_date']
 	start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
@@ -74,11 +73,11 @@ def create_booking(request):
 	start_time = datetime.datetime.strptime(start_time,'%H:%M').time()
 	end_time = request.POST['end_time']
 	end_time = datetime.datetime.strptime(end_time,'%H:%M').time()
+	# ANDRAS TILL ATT VARA ANVANDAREN SOM AR INLOGGAD.
 	user = 2
-
 	b = Booking(resource=resource,user=User.objects.get(id=2),start_date=start_date,start_time=start_time,end_date=end_date,end_time=end_time,message=msg)
 	b.save()
-	return HttpResponse("")
+	return HttpResponseRedirect("/static/corman/home.html#/resources/"+resource.name)
 
 
 @csrf_exempt
@@ -86,12 +85,19 @@ def get_booking_details(request):
 	obj = json.loads(request.body)
 	response = {}
 	response['success'] = True
-
 	booking = Booking.objects.get(id=obj['id'])
 	response['data'] = {'resource' : booking.resource.name, 'user' : booking.user.first_name, 'booked' : str(booking.booked), 
 							'start' : str(booking.start_date), 'end' : str(booking.end_date), 'message' : booking.message}
 
 	return HttpResponse(json.dumps(response), content_type="application/json")
+
+@csrf_exempt
+def remove_booking(request):
+	booking_id = request.POST['booking_id']
+	booking = Booking.objects.get(id=booking_id)
+	booking.delete()
+	return HttpResponseRedirect("/static/corman/home.html#/resources/"+request.POST['resource_name'])
+
 
 
 def home(request):

@@ -1,10 +1,12 @@
-<p>reservation site</p>
-<form method="post" action="/create_booking/">
-	<select name="resource">
+<h2>Boka {{resourceName}}</h2>
+<form method="post" action="/create_booking/" accept-charset="UTF-8">
+<!-- 	<select name="resource">
 		<option ng-repeat="resource in resources.data" value="{{resource.id}}">{{resource.name}}</options>
-	</select><br>
+	</select><br> -->
+	<input type="hidden" name="resource" value="{{resourceName}}">
 	Start date: <input type="date" name="start_date"><input type="time" name="start_time"><br>
 	End date: <input type="date" name="end_date"><input type="time" name="end_time"><br>
-	<input type="text" name="msg"><br>
+	Message: <input type="text" name="msg"><br>
 	<input type="submit" valute="Boka" name="reservation_button">
 </form>
+
