@@ -2,7 +2,7 @@
 
 <p>{{booking.data.message}}</p>
 
-<form method="post" action="/remove_booking/" accept-charset="UTF-8">
+<form method="post" action="/bookings/remove_booking/" accept-charset="UTF-8">
   <input type="hidden" name="booking_id" value="{{bookingId}}">
   <input type="hidden" name="resource_name" value="{{resourceName}}">
   <input type="submit" value="Avboka" name="unreservation_button">

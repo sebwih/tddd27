@@ -1,4 +1,4 @@
-<html ng-app="cormanApp">
+<html ng-app="cormanApp" ng-controller='loginCtrl'>
 <head>
   <script src="js/angular.js"></script>
   <script src="js/controllers.js"></script>
@@ -6,8 +6,18 @@
   <script src="js/corman.js"></script>
 </head>
 <body>
-  <div ng-view>
+  <div ng-if="logged_in" ng-view>
   </div>
+
+	<div ng-if="!logged_in">
+  		<a href="/accounts/google/login/?process=login">
+			<img src="Red-signin-Long-base-44dp.png" 
+				onmouseover="this.src='Red-signin-Long-hover-44dp.png'" 
+				onmouseout="this.src='Red-signin-Long-base-44dp.png'"
+				onclick="this.src='Red-signin-Long-press-44dp.png'"
+				width="246" height="54" alt="Sign in button">
+		</a>
+	</div>
 
 </body>
 </html>

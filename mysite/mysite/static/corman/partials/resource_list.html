@@ -7,9 +7,11 @@
 </div>
 
 <ul>
-  <li ng-repeat="resource in resources.data | filter:query | orderBy:orderProp">
-    <a href="#/resources/{{resource.name}}">{{resource.name}}</a>
-    <p>{{resource.description}}</p>
-  </li>
+  <article ng-repeat="resource in resources.data | filter:query | orderBy:orderProp" style="width: 15em; height: 2em%; border: solid 1px black;
+    background-color: white;">
+    <a href="#/resources/{{resource.name}}">{{resource.name}}</a><br>
+    {{resource.description}}
+  </article>
 </ul>
+<a href="/logout">Log out</a>
 <br>

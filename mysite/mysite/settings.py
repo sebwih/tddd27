@@ -124,7 +124,7 @@ AUTHENTICATION_BACKENDS = (
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'mysite/templates')]
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/static/corman/home.html'
 
 SITE_ID = 2
 
