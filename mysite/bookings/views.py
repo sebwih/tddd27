@@ -92,9 +92,10 @@ def remove_booking(request):
 @csrf_exempt
 def get_week_bookings(request):
 	obj = json.loads(request.body)
+	print obj
 	resource = obj['resource']
-	s_date = datetime.datetime.strptime(obj['s_date'], '%Y-%m-%d').date()
-	e_date = datetime.datetime.strptime(obj['e_date'], '%Y-%m-%d').date()
+	s_date = datetime.datetime.strptime(obj['dates']['start'], '%Y-%m-%d').date()
+	e_date = datetime.datetime.strptime(obj['dates']['end'], '%Y-%m-%d').date()
 	week = s_date.isocalendar()[1]
 	b = Booking.objects.filter(Q(resource=resource),Q(start_date__gt=s_date),Q(end_date__lt=e_date)).order_by('start_date','start_time')
 

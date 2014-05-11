@@ -1,7 +1,6 @@
 var cormanApp = angular.module('cormanApp', [
   'ngRoute',
   'cormanControllers',
-  'ui.validate'
 ]);
 
 cormanApp.config(['$routeProvider',

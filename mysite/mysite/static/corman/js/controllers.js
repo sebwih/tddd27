@@ -52,7 +52,7 @@ cormanControllers.controller('ResourceDetailCtrl', function ($scope, $routeParam
   });  
 });
 
-cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $http){
+cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $http, $filter){
   $scope.weekdays = ['Monday','Thuesday','Wendsday', 'Thurday','Friday','Saturday','Sunday'];
   $scope.times = ['00.00', '00.30','01.00','01.30','02.00','02.30','03.00','03.30','04.00',
                   '04.30','05.00','05.30','06.00','06.30','07.00','07.30','08.00','08.30',
@@ -62,11 +62,25 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
                   '22.30','23.00','23.30']
   $scope.week_start_date = function (x){
     var d = new Date();
-    var start = d.getDate()-(d.getDay()+6)+x;
+    var start = (d.getDate()-((d.getDay()+6) % 7))+x;
     return start;
   };
-  $scope.get_week = function (){
-    var d = new Date();
-    return d.getFullWeek();
+
+  $scope.get_week_date = function(x){
+      var temp = new Date()
+      temp.setDate(temp.getDate()-((temp.getDay()+6) % 7))
+      temp = $filter('date')(temp, 'yyyy-MM-dd')
+      req = {}
+      req['start'] = temp
+      temp = new Date()
+      temp.setDate((temp.getDate()-((temp.getDay()+6) % 7))+6)
+      temp = $filter('date')(temp, 'yyyy-MM-dd')
+      req['end'] = temp
+      console.log(req)
+      return req
   }
+
+  $http.post('/bookings/get_week_bookings/', {"resource" : "1", "dates" : $scope.get_week_date(1)}).success(function(data) {
+      $scope.bookings = data;
+  });
 });
