@@ -1,6 +1,7 @@
 var cormanApp = angular.module('cormanApp', [
   'ngRoute',
-  'cormanControllers'
+  'cormanControllers',
+  'ui.validate'
 ]);
 
 cormanApp.config(['$routeProvider',
@@ -33,6 +34,10 @@ cormanApp.config(['$routeProvider',
       when('/resources/:resourceName/:bookingId', {
         templateUrl: 'partials/booking_details.html',
         controller: 'BookingDetailCtrl'        
+      }).
+        when('/calendar', {
+        templateUrl: 'partials/calendar.html',
+        controller: 'CalendarCtrl'        
       }).
       otherwise({
         redirectTo: '/resources'

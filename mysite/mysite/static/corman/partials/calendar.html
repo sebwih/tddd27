@@ -1,0 +1,21 @@
+<h1>CALENDAR</h1>
+
+<table class="calendar">
+	<caption>
+		<h2>Week {{get_week()}}</h2>
+	</caption>
+	<tr>
+		<th></th>
+		<th ng-repeat="day in weekdays">{{day}}<br>{{week_start_date($index)}}</th>
+	</tr>
+	<tr ng-repeat="time in times">
+		<th>{{time}}</th>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+</table>

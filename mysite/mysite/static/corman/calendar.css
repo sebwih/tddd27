@@ -1,0 +1,13 @@
+.calendar{
+	width: 100%;
+	border-collapse:collapse;
+}
+
+.calendar td{
+	border:1px solid black;
+	width:14%;
+}
+
+.calendar th{
+	width:6%;
+}
