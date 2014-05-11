@@ -13,5 +13,5 @@ urlpatterns = patterns('',
 	url(r'^get_booking_details/', views.get_booking_details, name='get_booking_details'),
 	url(r'^get_resource_bookings/', views.get_resource_bookings, name='get_resource_bookings'),
 	url(r'^remove_booking/', views.remove_booking, name='remove_booking'),
-	url(r'^blubb/', views.blubb, name='blubb'),
+	url(r'^get_week_bookings/', views.get_week_bookings, name='get_week_bookings'),
 )

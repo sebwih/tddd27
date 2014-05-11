@@ -18,6 +18,16 @@ cormanControllers.controller('BookingDetailCtrl', function ($scope, $routeParams
 
 cormanControllers.controller('ReservationCtrl', function ($scope, $routeParams, $http) {
     $scope.resourceName = $routeParams.resourceName;
+    
+    $scope.formValidate = function(form){
+      if(form.start_date.$modelValue == form.end_date.$modelValue){
+        return form.start_time.$modelValue < form.end_time.$modelValue;
+      }
+      else{
+        return form.start_date.$modelValue < form.end_date.$modelValue;
+      }
+    };
+
  });
 
 cormanControllers.controller('loginCtrl', function ($scope, $http) {

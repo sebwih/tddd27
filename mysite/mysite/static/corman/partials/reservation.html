@@ -1,12 +1,12 @@
 <h2>Boka {{resourceName}}</h2>
-<form method="post" action="/bookings/book_resource/" accept-charset="UTF-8">
-<!-- 	<select name="resource">
-		<option ng-repeat="resource in resources.data" value="{{resource.id}}">{{resource.name}}</options>
-	</select><br> -->
-	<input type="hidden" name="resource" value="{{resourceName}}">
-	Start date: <input type="date" name="start_date"><input type="time" name="start_time"><br>
-	End date: <input type="date" name="end_date"><input type="time" name="end_time"><br>
-	Message: <input type="text" name="msg"><br>
-	<input type="submit" valute="Boka" name="reservation_button">
-</form>
+<div>
+ 	<form name='bookingform' method="post" action="/bookings/book_resource/" accept-charset="UTF-8" novalidate>
+		<input type="hidden" name="resource" value="{{resourceName}}">
+		Start date: <input required type="date" name="start_date" ng-model="booking.start_date"><input required type="time" ng-model="booking.start_time"name="start_time"><br>
+		End date: <input required type="date" name="end_date" ng-model="booking.end_date" min="2014-02-03">
+		<input required type="time" ng-model="booking.end_time" name="end_time"><br>
+		Message: <input required type="text" name="msg"><br>
+		<input type="submit" name="reservation_button" value="boka" ng-disabled="!formValidate(bookingform)">
+	</form>
+</div>
 

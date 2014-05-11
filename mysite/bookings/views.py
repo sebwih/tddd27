@@ -7,6 +7,7 @@ from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 import json
 import datetime
+from django.db.models import Q
 
 def get_bookings(request):
 	response = {}
@@ -64,7 +65,8 @@ def book_resource(request):
 	end_time = request.POST['end_time']
 	end_time = datetime.datetime.strptime(end_time,'%H:%M').time()
 	# ANDRAS TILL ATT VARA ANVANDAREN SOM AR INLOGGAD.
-	user = User.objects.get(id=2)
+	user = User.objects.get(id=request.user.id)
+	print user
 	Resource.create_booking(resource,user,start_date,start_time,end_date,end_time,msg)
 	return HttpResponseRedirect("/static/corman/home.html#/resources/"+resource.name)
 
@@ -86,3 +88,21 @@ def remove_booking(request):
 	booking = Booking.objects.get(id=booking_id)
 	booking.delete()
 	return HttpResponseRedirect("/static/corman/home.html#/resources/"+request.POST['resource_name'])
+
+@csrf_exempt
+def get_week_bookings(request):
+	obj = json.loads(request.body)
+	resource = obj['resource']
+	s_date = datetime.datetime.strptime(obj['s_date'], '%Y-%m-%d').date()
+	e_date = datetime.datetime.strptime(obj['e_date'], '%Y-%m-%d').date()
+	week = s_date.isocalendar()[1]
+	b = Booking.objects.filter(Q(resource=resource),Q(start_date__gt=s_date),Q(end_date__lt=e_date)).order_by('start_date','start_time')
+
+	response = {}
+	response['success'] = True
+	response['data'] = json.loads(serializers.serialize('json', b))
+	response['week'] = week
+
+	return HttpResponse(json.dumps(response), content_type="application/json")
+
+
