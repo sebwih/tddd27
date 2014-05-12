@@ -1,15 +1,17 @@
 <h1>{{resourceName}}</h1>
 
 <ul>
-  <article ng-repeat="resource in resource_bookings.data" style="width: 20em; height: 2em%; border: solid 1px black;
-    background-color: white;">
-    <!-- <p>Start: {{resource.fields.start_date}} {{resource.fields.start_time}}</p> -->
+  <article ng-init="show=false" ng-click="show=!show" 
+            ng-repeat="resource in resource_bookings.data" style="width: 20em; height: 2em%; border: solid 1px black;
+            background-color: white;">
     <a href="#/resources/{{resourceName}}/{{resource.pk}}">
     	Start: {{resource.fields.start_date}} {{resource.fields.start_time}}
     </a>
-    <p>End: {{resource.fields.end_date}} {{resource.fields.end_time}}</p>
-    <p>Message: {{resource.fields.message}}</p>
-    <p>User: {{resource.fields.user}}</p>
+    <div ng-show="show">
+        <p>End: {{resource.fields.end_date}} {{resource.fields.end_time}}</p>
+        <p>Message: {{resource.fields.message}}</p>
+        <p>User: {{resource.fields.user}}</p>
+    </div>
   </article>
 </ul>
 

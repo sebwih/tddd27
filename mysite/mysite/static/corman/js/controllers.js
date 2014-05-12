@@ -52,6 +52,13 @@ cormanControllers.controller('ResourceDetailCtrl', function ($scope, $routeParam
   });  
 });
 
+cormanControllers.controller('UserBookingsCtrl', function ($scope, $routeParams, $http){
+  $scope.resourceName = $routeParams.resourceName;
+  $http.get('/bookings/get_user_bookings').success(function(data){
+    $scope.user_bookings = data;
+  });  
+});
+
 cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $http, $filter){
   $scope.weekdays = ['Monday','Thuesday','Wendsday', 'Thurday','Friday','Saturday','Sunday'];
   $scope.times = ['00.00', '00.30','01.00','01.30','02.00','02.30','03.00','03.30','04.00',

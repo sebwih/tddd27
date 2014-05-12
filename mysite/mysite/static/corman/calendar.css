@@ -11,3 +11,7 @@
 .calendar th{
 	width:6%;
 }
+
+#mon0{
+	background-color: red;
+}

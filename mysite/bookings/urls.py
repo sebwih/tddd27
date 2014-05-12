@@ -9,6 +9,7 @@ urlpatterns = patterns('',
 
 	url(r'^get_bookings/', views.get_bookings, name='get_bookings'),
 	url(r'^get_resources/', views.get_resources, name='get_resources'),
+	url(r'^get_user_bookings/', views.get_user_bookings, name='get_user_bookings'),
 	url(r'^book_resource/', views.book_resource, name='create_booking'),
 	url(r'^get_booking_details/', views.get_booking_details, name='get_booking_details'),
 	url(r'^get_resource_bookings/', views.get_resource_bookings, name='get_resource_bookings'),

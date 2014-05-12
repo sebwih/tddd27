@@ -14,10 +14,6 @@ cormanApp.config(['$routeProvider',
         templateUrl: 'partials/booking_details.html',
         controller: 'BookingDetailCtrl'
       }).
-      when('/new_reservation', {
-      	templateUrl: 'partials/reservation.html',
-        controller: 'ReservationCtrl'
-      }).
       when('/resources', {
         templateUrl: 'partials/resource_list.html',
         controller: 'ResourceListCtrl'
@@ -37,6 +33,10 @@ cormanApp.config(['$routeProvider',
         when('/calendar', {
         templateUrl: 'partials/calendar.html',
         controller: 'CalendarCtrl'        
+      }).
+        when('/my_bookings', {
+        templateUrl: 'partials/user_bookings.html',
+        controller: 'UserBookingsCtrl'
       }).
       otherwise({
         redirectTo: '/resources'

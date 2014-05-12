@@ -23,22 +23,22 @@ def get_bookings(request):
 
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
+def get_user_bookings(request):
+	
+	response = {}
+	response['success'] = True
+
+	bookings = Booking.objects.filter(user=request.user.id)
+	response['data'] = json.loads(serializers.serialize("json", bookings))
+
+	return HttpResponse(json.dumps(response), content_type="application/json")
+
+#Anvands denna?
 def get_resources(request):
-	if request.user.is_authenticated():
-		response = {}
-		response['success'] = True
-		response['data'] = list(Resource.objects.values('name','id','description'))
-		return HttpResponse(json.dumps(response), content_type="application/json")
-
-	else:
-		response = {}
-		response['success'] = True
-		response['data'] = [{'name':'pool','id': 1, 'description':'djup som faaan'}]
-		return HttpResponse(json.dumps(response), content_type="application/json")
-
-def blubb(request):
-	return HttpResponse("not logged in")
-
+	response = {}
+	response['success'] = True
+	response['data'] = list(Resource.objects.values('name','id','description'))
+	return HttpResponse(json.dumps(response), content_type="application/json")
 
 @csrf_exempt
 def get_resource_bookings(request):
@@ -87,7 +87,7 @@ def remove_booking(request):
 	booking_id = request.POST['booking_id']
 	booking = Booking.objects.get(id=booking_id)
 	booking.delete()
-	return HttpResponseRedirect("/static/corman/home.html#/resources/"+request.POST['resource_name'])
+	return HttpResponseRedirect("/static/corman/home.html#/my_bookings")
 
 @csrf_exempt
 def get_week_bookings(request):

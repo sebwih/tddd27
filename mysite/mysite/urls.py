@@ -7,11 +7,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-    url(r'^usrname/', 'mysite.views.post_usrname', name='usr'),
-    url(r'^login_local/', 'mysite.views.login_local', name='login_local'),
     url(r'^logout/', 'django.contrib.auth.views.logout', {'next_page' : '/static/corman/home.html'}),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^login/', 'mysite.views.login', name='login'),
     (r'^accounts/', include('allauth.urls')),
     url(r'^bookings/', include('bookings.urls')),
     url(r'^user_logged_in/', 'mysite.views.user_logged_in', name='user_logged_in'),
