@@ -1,6 +1,7 @@
 var cormanApp = angular.module('cormanApp', [
   'ngRoute',
   'cormanControllers',
+  'ui.calendar'
 ]);
 
 cormanApp.config(['$routeProvider',
