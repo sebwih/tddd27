@@ -1,5 +1,14 @@
 <h1>CALENDAR</h1>
-<div ui-calendar="uiConfig.calendar" ng-model="eventSources">
+
+{{alertMessage}}
+
+<script type="text/ng-template" id="templateId">
+    <h1>Template heading</h1>
+    <p>{{startDate}}</p>
+</script>
+
+<div class="calendar" ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar" ui-calendar="uiConfig.calendar">
+</div>
 <!--<table class="calendar">
 	<caption>
 		<h2>Week {{bookings.week}}</h2>
@@ -20,3 +29,5 @@
 	</tr>
 </table>
 {{bookings}} -->
+
+<span class="glyphicon glyphicon-star"></span> STAR

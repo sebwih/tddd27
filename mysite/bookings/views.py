@@ -53,22 +53,24 @@ def get_resource_bookings(request):
 
 @csrf_exempt
 def book_resource(request):
-	resource = request.POST['resource']
-	resource = Resource.objects.get(name=resource)
-	msg = request.POST['msg']
-	start_date = request.POST['start_date']
-	start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
-	end_date = request.POST['end_date']
-	end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').date()
-	start_time = request.POST['start_time']
-	start_time = datetime.datetime.strptime(start_time,'%H:%M').time()
-	end_time = request.POST['end_time']
-	end_time = datetime.datetime.strptime(end_time,'%H:%M').time()
-	# ANDRAS TILL ATT VARA ANVANDAREN SOM AR INLOGGAD.
-	user = User.objects.get(id=request.user.id)
-	print user
-	Resource.create_booking(resource,user,start_date,start_time,end_date,end_time,msg)
-	return HttpResponseRedirect("/static/corman/home.html#/resources/"+resource.name)
+	print request.POST['start_date']
+	return HttpResponse("")
+	# resource = request.POST['resource']
+	# resource = Resource.objects.get(name=resource)
+	# msg = request.POST['msg']
+	# start_date = request.POST['start_date']
+	# start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
+	# end_date = request.POST['end_date']
+	# end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').date()
+	# start_time = request.POST['start_time']
+	# start_time = datetime.datetime.strptime(start_time,'%H:%M').time()
+	# end_time = request.POST['end_time']
+	# end_time = datetime.datetime.strptime(end_time,'%H:%M').time()
+	# user = User.objects.get(id=request.user.id)
+	# print user
+	# Resource.create_booking(resource,user,start_date,start_time,end_date,end_time,msg)
+	# return HttpResponseRedirect("/static/corman/home.html#/resources/"+resource.name)
+
 
 
 @csrf_exempt
@@ -91,19 +93,20 @@ def remove_booking(request):
 
 @csrf_exempt
 def get_week_bookings(request):
-	obj = json.loads(request.body)
-	print obj
-	resource = obj['resource']
-	s_date = datetime.datetime.strptime(obj['dates']['start'], '%Y-%m-%d').date()
-	e_date = datetime.datetime.strptime(obj['dates']['end'], '%Y-%m-%d').date()
-	week = s_date.isocalendar()[1]
-	b = Booking.objects.filter(Q(resource=resource),Q(start_date__gt=s_date),Q(end_date__lt=e_date)).order_by('start_date','start_time')
+	start = request.GET['start']
+	start = (datetime.datetime.fromtimestamp(int(start)))
+	end = request.GET['end']
+	end = (datetime.datetime.fromtimestamp(int(end)))
+		
+	# s_date = datetime.datetime.strptime(start, '%Y-%m-%d').date()
+	# e_date = datetime.datetime.strptime(end, '%Y-%m-%d').date()
+	b = Booking.objects.filter(Q(resource=1),Q(start_date__gt=start),Q(end_date__lt=end)).order_by('start_date')
 
-	response = {}
-	response['success'] = True
-	response['data'] = json.loads(serializers.serialize('json', b))
-	response['week'] = week
+	event_feed = []
 
-	return HttpResponse(json.dumps(response), content_type="application/json")
+	for event in b:
+		event_feed += [{'id' : event.id, 'title' : event.message, 'start' : str(event.start_date), 'end' : str(event.end_date), 'allDay' : False}]
+
+	return HttpResponse(json.dumps(event_feed), content_type="application/json")
 
 
