@@ -4,9 +4,8 @@ class Resource(models.Model):
 	def __unicode__(self):
 		return self.name
 
-	def create_booking(self, user, start_date, start_time, end_date, end_time, message):
-		b = Booking(resource=self,user=user,start_date=start_date,start_time=start_time,
-					end_date=end_date,end_time=end_time,message=message)
+	def create_booking(self, user, start_date, end_date, message):
+		b = Booking(resource=self,user=user,start_date=start_date,end_date=end_date,message=message)
 		b.save()
 
 	def remove_booking(self):

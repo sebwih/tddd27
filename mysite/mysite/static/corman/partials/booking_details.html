@@ -1,3 +1,6 @@
-<h1>{{booking.data.resource}}</h1>
-
-<p>{{booking.data.message}}</p>
+ID: {{bookingId}}<br>
+User: {{booking.data.user}}<br>
+Message: {{booking.data.message}}<br>
+Date Booked: {{booked | date: 'MMM dd HH:mm'}}<br>
+Start date of booking: {{bookingStart | date: 'MMM dd HH:mm'}}<br>
+End date of booking: {{bookingEnd | date: 'MMM dd HH:mm'}}

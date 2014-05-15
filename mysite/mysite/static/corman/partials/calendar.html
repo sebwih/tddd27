@@ -1,33 +1,12 @@
-<h1>CALENDAR</h1>
-
-{{alertMessage}}
-
-<script type="text/ng-template" id="templateId">
-    <h1>Template heading</h1>
-    <p>{{startDate}}</p>
-</script>
+<div style="width: 800px; margin: auto">
+<div>
+  <accordion close-others="true">
+    <accordion-group heading="{{resource.name}}"  ng-click="showResource(resource.id,myCalendar1)" ng-repeat="resource in resources.data">
+    {{resource.description}}
+    </accordion-group>
+  </accordion>
+</div>
 
 <div class="calendar" ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar" ui-calendar="uiConfig.calendar">
 </div>
-<!--<table class="calendar">
-	<caption>
-		<h2>Week {{bookings.week}}</h2>
-	</caption>
-	<tr>
-		<th></th>
-		<th ng-repeat="day in weekdays">{{day}}<br>{{week_start_date($index)}}</th>
-	</tr>
-	<tr ng-repeat="time in times">
-		<th>{{time}}</th>
-		<td id="'mon' + "'{{$index}}'"">{{$index}}</td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-	</tr>
-</table>
-{{bookings}} -->
-
-<span class="glyphicon glyphicon-star"></span> STAR
+</div>

@@ -37,7 +37,7 @@ def get_user_bookings(request):
 def get_resources(request):
 	response = {}
 	response['success'] = True
-	response['data'] = list(Resource.objects.values('name','id','description'))
+	response['data'] = list(Resource.objects.filter(available=True).values('id','name','description'))
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
 @csrf_exempt
@@ -53,34 +53,47 @@ def get_resource_bookings(request):
 
 @csrf_exempt
 def book_resource(request):
-	print request.POST['start_date']
-	return HttpResponse("")
-	# resource = request.POST['resource']
-	# resource = Resource.objects.get(name=resource)
-	# msg = request.POST['msg']
-	# start_date = request.POST['start_date']
-	# start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
-	# end_date = request.POST['end_date']
-	# end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').date()
-	# start_time = request.POST['start_time']
-	# start_time = datetime.datetime.strptime(start_time,'%H:%M').time()
-	# end_time = request.POST['end_time']
-	# end_time = datetime.datetime.strptime(end_time,'%H:%M').time()
-	# user = User.objects.get(id=request.user.id)
-	# print user
-	# Resource.create_booking(resource,user,start_date,start_time,end_date,end_time,msg)
-	# return HttpResponseRedirect("/static/corman/home.html#/resources/"+resource.name)
 
+	start_date = request.POST['startDate']
+	start_time = request.POST['startTime']
 
+	end_date = request.POST['endDate']
+	end_time = request.POST['endTime']
+	msg = request.POST['msg']
+	resource_id = request.POST['resourceId']
+
+	resource = Resource.objects.get(id=resource_id)
+
+	start_date += (' ' + start_time)
+
+	start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S')
+
+	end_date += (' ' + end_time)
+
+	end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d %H:%M:%S')
+	
+	user = User.objects.get(id=request.user.id)
+	Resource.create_booking(resource,user,start_date,end_date,msg)
+
+	return HttpResponseRedirect("/static/corman/home.html#/calendar")
 
 @csrf_exempt
 def get_booking_details(request):
-	obj = json.loads(request.body)
+	booking_id = request.GET['id']
+
+
+	booking = Booking.objects.get(id=booking_id)
+
 	response = {}
 	response['success'] = True
-	booking = Booking.objects.get(id=obj['id'])
 	response['data'] = {'resource' : booking.resource.name, 'user' : booking.user.first_name, 'booked' : str(booking.booked), 
-							'start' : str(booking.start_date), 'end' : str(booking.end_date), 'message' : booking.message}
+						'start' : str(booking.start_date), 'end' : str(booking.end_date), 'message' : booking.message}
+
+	# return HttpResponse(json.dumps(response), content_type="application/json")
+	# 
+	# booking = Booking.objects.get(id=obj['id'])
+	# response['data'] = {'resource' : booking.resource.name, 'user' : booking.user.first_name, 'booked' : str(booking.booked), 
+	# 						'start' : str(booking.start_date), 'end' : str(booking.end_date), 'message' : booking.message}
 
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
@@ -97,10 +110,12 @@ def get_week_bookings(request):
 	start = (datetime.datetime.fromtimestamp(int(start)))
 	end = request.GET['end']
 	end = (datetime.datetime.fromtimestamp(int(end)))
+	resource_id = request.GET['id']
+	print resource_id
 		
 	# s_date = datetime.datetime.strptime(start, '%Y-%m-%d').date()
 	# e_date = datetime.datetime.strptime(end, '%Y-%m-%d').date()
-	b = Booking.objects.filter(Q(resource=1),Q(start_date__gt=start),Q(end_date__lt=end)).order_by('start_date')
+	b = Booking.objects.filter(Q(resource=resource_id),Q(start_date__gt=start),Q(end_date__lt=end)).order_by('start_date')
 
 	event_feed = []
 

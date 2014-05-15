@@ -4,7 +4,6 @@ var cormanApp = angular.module('cormanApp', [
   'ui.calendar',
   'ui.bootstrap',
   'ngDialog',
-  'ngQuickDate'
 ]);
 
 cormanApp.config(['$routeProvider',
