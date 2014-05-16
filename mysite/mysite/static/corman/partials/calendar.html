@@ -1,12 +1,14 @@
-<div style="width: 800px; margin: auto">
-<div>
-  <accordion close-others="true">
-    <accordion-group heading="{{resource.name}}"  ng-click="showResource(resource.id,myCalendar1)" ng-repeat="resource in resources.data">
-    {{resource.description}}
-    </accordion-group>
-  </accordion>
-</div>
-
-<div class="calendar" ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar" ui-calendar="uiConfig.calendar">
-</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-2 spacer left-side-padding">
+		  	<accordion close-others="true">
+		    	<accordion-group heading="{{resource.name}}"  ng-click="showResource(resource.id,myCalendar1)" ng-repeat="resource 	in resources.data">
+		   	 		{{resource.description}}
+		    	</accordion-group>
+		  	</accordion>
+		</div>	
+		<div class="col-md-10 right-side-padding">
+			<div class="calendar" ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
+		</div>
+	</div>
 </div>

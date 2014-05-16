@@ -14,10 +14,28 @@
     <link rel="stylesheet" type="text/css" href="css/ngDialog-theme-default.css">
   	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
   	<link rel="stylesheet" type="text/css" href="css/fullcalendar.css">
+    <link rel="stylesheet" type="text/css" href="css/corman.css">
 </head>
+
 <body>
-  <div ng-if="logged_in" ng-view>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+      <a class="navbar-brand">CORMAN</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav navbar-left">
+        <li class="active" ng-class="{ active: isActive('/calendar')}"><a href="#/calendar">Resources</a></li>
+        <li ng-class="{ active: isActive('/my_bookings')}"><a href="#/my_bookings">Your reservations</a></li>
+        <li ng-class="{ active: isActive('/schedulr')}"><a href="#/schedulr">Schedulr</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li id="sign-out"><a href="http://localhost:8000/logout">Sign out</a></li>
+      </ul>
   </div>
+</nav>
+
+<div ng-if="logged_in" ng-view></div>
 
 	<div ng-if="!logged_in">
   		<a href="/accounts/google/login/?process=login">

@@ -6,6 +6,12 @@ var cormanApp = angular.module('cormanApp', [
   'ngDialog',
 ]);
 
+cormanApp.run(function($rootScope,$location) {
+    $rootScope.isActive = function (viewLocation) { 
+        return viewLocation === $location.path();
+    };
+})
+
 cormanApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
@@ -42,6 +48,6 @@ cormanApp.config(['$routeProvider',
         controller: 'UserBookingsCtrl'
       }).
       otherwise({
-        redirectTo: '/resources'
+        redirectTo: '/calendar'
       });
   }]);
