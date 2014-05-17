@@ -38,6 +38,8 @@ def get_resources(request):
 	response = {}
 	response['success'] = True
 	response['data'] = list(Resource.objects.filter(available=True).values('id','name','description'))
+	for elem in response['data']:
+		elem['open'] = False;
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
 @csrf_exempt

@@ -6,6 +6,12 @@ var cormanApp = angular.module('cormanApp', [
   'ngDialog',
 ]);
 
+cormanApp.run(function($rootScope,$location) {
+    $rootScope.isActive = function (viewLocation) { 
+        return (viewLocation === $location.path()) && $rootScope.logged_in;
+    };
+})
+
 cormanApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
@@ -37,7 +43,10 @@ cormanApp.config(['$routeProvider',
         templateUrl: 'partials/new_schedulr.html',
         controller: 'SchedulrCtrl'
       }).
+        when('/login', {
+        templateUrl: '/sign_in.html',
+      }).
       otherwise({
-        redirectTo: '/resources'
+        redirectTo: '/calendar'
       });
   }]);

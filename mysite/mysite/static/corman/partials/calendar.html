@@ -9,4 +9,19 @@
 
 <div class="calendar" ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar" ui-calendar="uiConfig.calendar">
 </div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-3 spacer left-side-padding">
+		  	<accordion close-others="true">
+		    	<accordion-group class="accordion-toggle" ng-click="showResource(resource.id,myCalendar1,resource,$index)" ng-repeat="resource in resources.data" is-open="resource.open">
+		    	<accordion-heading><a class="acc-heading" ng-click="showResource(resource.id,myCalendar1,resource,$index)">{{resource.name}}</a></accordion-heading>
+		   	 		{{resource.description}}
+		    	</accordion-group>
+		  	</accordion>
+		</div>	
+		<div class="col-md-9 right-side-padding">
+			<div class="calendar" ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
+		</div>
+	</div>
 </div>

@@ -16,12 +16,14 @@ cormanControllers.controller('BookingDetailCtrl', function ($scope, $routeParams
     });
 });
 
-cormanControllers.controller('loginCtrl', function ($scope, $http) {
+cormanControllers.controller('loginCtrl', function ($scope, $http, $rootScope) {
     $http.get('/user_logged_in').success(function(data) {
       if(data.success){
-        $scope.logged_in = true;
+        $rootScope.logged_in = true;
+        $scope.showView = true;
       } else{
-        $scope.logged_in = false;
+        $rootScope.logged_in = false;
+        $scope.showView = true;
       }
     });
  });
@@ -104,11 +106,14 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
   //INIT ORDENTLIGT!
   $scope.currentResource = 1
 
+  $scope.resources;
+
   $http.get('/bookings/get_resources').success(function(data){
       $scope.resources = data;
   });
 
-  $scope.showResource = function(id,calendar){
+  $scope.showResource = function(id,calendar,resource,index){
+    resource['open'] = !resource['open']
     if($scope.currentResource !== id){
       $scope.currentResource = id;
       calendar.fullCalendar('refetchEvents')
