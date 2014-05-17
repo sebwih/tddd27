@@ -1,0 +1,37 @@
+.choice_false{
+	background-color: #F2473F;
+	border: 2px solid white;
+}
+
+.choice_true{
+	background-color: #B3C95A;
+	border: 2px solid white;
+}
+
+.centered_header{
+	text-align: center;
+}
+
+.header_icon{
+	font-size: 1.5em;
+	padding-top: 25%;
+}
+
+.header_icon_answer{
+	font-size: 1.5em;
+	padding-top: 7%;
+}
+
+.user_column{
+	background-color: #F0F8FF;
+	border: 2px solid white;
+}
+
+.schedulr_input{
+	text-align: center;
+}
+
+.schedulr_user_input{
+	background-color: #F0F0F0;
+	border: 2px solid white;
+}

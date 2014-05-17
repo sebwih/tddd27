@@ -8,17 +8,13 @@ cormanControllers.controller('BookingListCtrl', function ($scope, $http) {
 
 
 cormanControllers.controller('BookingDetailCtrl', function ($scope, $routeParams, $http) {
-    /*$scope.resourceName = $routeParams.resourceName;
-    $http.post('/bookings/get_booking_details/', {"id" : $routeParams.bookingId}).success(function(data) {
-      $scope.booking = data;*/
       $http.get('/bookings/get_booking_details/?id='+$scope.bookingId).success(function(data) {
       $scope.booking = data;
       $scope.booked = new Date($scope.booking.data.booked)
       $scope.bookingStart = new Date($scope.booking.data.start)
       $scope.bookingEnd = new Date($scope.booking.data.end)
     });
-
- });
+});
 
 cormanControllers.controller('loginCtrl', function ($scope, $http) {
     $http.get('/user_logged_in').success(function(data) {
@@ -29,11 +25,6 @@ cormanControllers.controller('loginCtrl', function ($scope, $http) {
       }
     });
  });
-
-
-cormanControllers.controller('ResourceListCtrl', function ($scope, $http){
-    
-});
 
 
 cormanControllers.controller('ResourceDetailCtrl', function ($scope, $routeParams, $http){
@@ -184,3 +175,45 @@ cormanControllers.controller('DateCtrl', function ($scope, $http){
   $scope.BookingEndTime = new Date($scope.endDate);
 
   });
+
+cormanControllers.controller('SchedulrCtrl', function ($scope, $routeParams, $http){
+  $http.get('/schedulr/get_user_events').success(function(data){
+    $scope.events = data;
+  });
+
+  $scope.getEventDetails = function(eventId){
+    console.log(eventId);
+    $http.get('/schedulr/get_event_data?eventId=' + eventId).success(function(data){
+      $scope.eventDetails = data
+    });
+  }
+});
+
+function AlertDemoCtrl($scope) {
+  $scope.alerts = [
+  ];
+
+  $scope.choiceNumber = 1;
+
+  $scope.ChoiceTime = new Date('2014-01-01 00:00')
+
+  $scope.addAlert = function() {
+    $scope.alerts.push({id: 1});
+    $scope.choiceNumber += 1;
+  };
+
+  $scope.closeAlert = function(index) {
+    $scope.alerts.splice(index, 1);
+  };
+
+}
+
+cormanControllers.controller('SchedulrAnswerCtrl', function ($scope, $routeParams, $http){
+  
+  $scope.eventId = $routeParams.eventId;
+
+  $http.get('/schedulr/get_event_data?eventId=' + $scope.eventId).success(function(data){
+      $scope.eventDetails = data
+  });
+
+});

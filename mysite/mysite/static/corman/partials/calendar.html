@@ -1,10 +1,10 @@
 <div style="width: 800px; margin: auto">
 <div>
-  <accordion close-others="true">
+<accordion close-others="true">
     <accordion-group heading="{{resource.name}}"  ng-click="showResource(resource.id,myCalendar1)" ng-repeat="resource in resources.data">
     {{resource.description}}
     </accordion-group>
-  </accordion>
+</accordion>
 </div>
 
 <div class="calendar" ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar" ui-calendar="uiConfig.calendar">

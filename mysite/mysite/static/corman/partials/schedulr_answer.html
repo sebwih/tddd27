@@ -1,0 +1,31 @@
+<div style="width: 500px; margin: auto;">
+<form method="post" action="/schedulr/create_response/">
+      <table class="table">
+      <tr>
+        <th class="centered_header">
+          <span class="glyphicon glyphicon-user header_icon_answer"></span>
+              </th>
+          <th ng-repeat="ch in eventDetails.data.choice" class="centered_header">
+              {{ch.fields.start | date: 'yyyy-MM-dd'}}<br>
+              {{ch.fields.start | date: 'HH:mm'}}
+            </th>
+          </tr>
+
+          <tr ng-repeat="user in eventDetails.data.response">
+            <td class="user_column">{{user.user}}</td>
+            <td ng-repeat="ans in user.answers" class="choice_{{ans.fields.free}}">
+            </td>
+          </tr>
+
+          <tr>
+            <td class="schedulr_user_input"><input type="text" name="user" placeholder="Name" maxlength="30"></td>
+            <td class="schedulr_input schedulr_user_input" ng-repeat="ch in eventDetails.data.choice">
+            <input type="checkbox" name="{{ch.pk}}">
+            </td>
+          </tr>
+
+      <input type="hidden" name="eventId" value="{{eventId}}">
+    </table>
+    <input type="submit" value="Send">
+  </form>
+</div>

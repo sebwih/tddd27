@@ -89,12 +89,6 @@ def get_booking_details(request):
 	response['data'] = {'resource' : booking.resource.name, 'user' : booking.user.first_name, 'booked' : str(booking.booked), 
 						'start' : str(booking.start_date), 'end' : str(booking.end_date), 'message' : booking.message}
 
-	# return HttpResponse(json.dumps(response), content_type="application/json")
-	# 
-	# booking = Booking.objects.get(id=obj['id'])
-	# response['data'] = {'resource' : booking.resource.name, 'user' : booking.user.first_name, 'booked' : str(booking.booked), 
-	# 						'start' : str(booking.start_date), 'end' : str(booking.end_date), 'message' : booking.message}
-
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
 @csrf_exempt
@@ -111,10 +105,7 @@ def get_week_bookings(request):
 	end = request.GET['end']
 	end = (datetime.datetime.fromtimestamp(int(end)))
 	resource_id = request.GET['id']
-	print resource_id
-		
-	# s_date = datetime.datetime.strptime(start, '%Y-%m-%d').date()
-	# e_date = datetime.datetime.strptime(end, '%Y-%m-%d').date()
+	
 	b = Booking.objects.filter(Q(resource=resource_id),Q(start_date__gt=start),Q(end_date__lt=end)).order_by('start_date')
 
 	event_feed = []
@@ -123,5 +114,3 @@ def get_week_bookings(request):
 		event_feed += [{'id' : event.id, 'title' : event.message, 'start' : str(event.start_date), 'end' : str(event.end_date), 'allDay' : False}]
 
 	return HttpResponse(json.dumps(event_feed), content_type="application/json")
-
-
