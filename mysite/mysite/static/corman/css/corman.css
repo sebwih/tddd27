@@ -6,3 +6,21 @@
 }
 
 #sign-out{padding-right: 20px};
+
+a .acc-heading:link {
+	text-decoration:none;
+	color:#333333;
+};
+a .acc-heading:visited {
+	text-decoration:none;
+	color:#333333;
+};
+a .acc-heading:hover {
+	text-decoration:none;
+	color:#333333;
+};
+a .acc-heading:active {
+	text-decoration:none;
+	color:#333333;
+};
+

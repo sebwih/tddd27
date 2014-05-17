@@ -8,7 +8,7 @@ var cormanApp = angular.module('cormanApp', [
 
 cormanApp.run(function($rootScope,$location) {
     $rootScope.isActive = function (viewLocation) { 
-        return viewLocation === $location.path();
+        return (viewLocation === $location.path()) && $rootScope.logged_in;
     };
 })
 
@@ -46,6 +46,9 @@ cormanApp.config(['$routeProvider',
         when('/my_bookings', {
         templateUrl: 'partials/user_bookings.html',
         controller: 'UserBookingsCtrl'
+      }).
+        when('/login', {
+        templateUrl: '/sign_in.html',
       }).
       otherwise({
         redirectTo: '/calendar'
