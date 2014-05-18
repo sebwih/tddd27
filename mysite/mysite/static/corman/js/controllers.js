@@ -106,9 +106,7 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
 
   $scope.currentResource = 1
 
-  
-
-  $scope.showResource = function(id,calendar,resource,index){
+  $scope.showResource = function(id,calendar,resource){
     resource['open'] = !resource['open']
     if($scope.currentResource !== id){
       $scope.currentResource = id;
