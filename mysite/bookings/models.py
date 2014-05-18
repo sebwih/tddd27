@@ -14,8 +14,6 @@ class Resource(models.Model):
 	name = models.CharField(max_length=200)
 	description = models.CharField(max_length=200, null=True, blank=True)
 	available = models.BooleanField()
-	priviledge = models.ForeignKey('auth.group', on_delete=models.CASCADE)
-	
 
 class Booking(models.Model):
 	def __unicode__(self):

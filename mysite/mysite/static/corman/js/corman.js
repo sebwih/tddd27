@@ -26,7 +26,7 @@ cormanApp.config(['$routeProvider','$httpProvider',
         templateUrl: 'partials/resource_details.html',
         controller: 'ResourceDetailCtrl'        
       }).
-      when('/schedulr/answer/:eventId', {
+      when('/schedulr/answer/:eventUrl', {
         templateUrl: 'partials/schedulr_answer.html',
         controller: 'SchedulrAnswerCtrl'      
       }).

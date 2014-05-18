@@ -13,22 +13,22 @@ def get_user_events(request):
 	user_id = request.user.id
 	user = User.objects.get(id=user_id)
 	events = Event.objects.filter(Q(user=user))
-	print events
 	return HttpResponse(serializers.serialize("json", events), content_type="application/json")
 
 def get_event_data(request):
-
-	event_id = request.GET['eventId']
-
+	event_url = request.GET['url']
 	response = {}
+	event = Event.objects.filter(url=event_url)
 
-	choices = Choice.objects.filter(event=event_id)
+	if not event:
+		response['success'] = False;
+		return HttpResponse(json.dumps(response), content_type="application/json")
+
+	choices = Choice.objects.filter(event=event[0].id)
 
 	responses = Response.objects.filter(Q(choice=choices))
 
 	users = Response.objects.filter(Q(choice=choices)).values("user").distinct()
-
-	print users
 
 	blubb = []
 
@@ -38,9 +38,42 @@ def get_event_data(request):
 				'answers' : json.loads(serializers.serialize("json",Response.objects.filter(Q(choice=choices),
 																							Q(user=user['user'])).order_by('choice')))}]
 
-
+	response['success'] = True
 	response['data'] = {"choice" : json.loads(serializers.serialize("json", choices)), 
 						"response" : blubb}
+
+	return HttpResponse(json.dumps(response), content_type="application/json")
+
+
+@csrf_exempt
+def get_all_events(request):
+
+	user_id = request.user.id
+	user = User.objects.get(id=user_id)
+	events = Event.objects.filter(Q(user=user))
+
+	temp_event = []
+	
+	for event in events:
+
+		choices = Choice.objects.filter(event=event.id)
+
+		responses = Response.objects.filter(Q(choice=choices))
+
+		users = Response.objects.filter(Q(choice=choices)).values("user").distinct()
+
+		blubb = []
+
+		for user in users:
+
+			blubb += [{'user' : user['user'], 
+						'answers' : json.loads(serializers.serialize("json",Response.objects.filter(Q(choice=choices),
+																							Q(user=user['user'])).order_by('choice')))}]
+
+		temp_event += [{'id' : event.id, 'event_desc' : event.description, "url" : event.url, 'choices' : json.loads(serializers.serialize("json", choices)), 'responses' : blubb}]
+
+	response = {}
+	response['data'] = {'events' : temp_event}
 
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
@@ -62,7 +95,7 @@ def create(request):
 
 		Choice.create(event,start_date)
 
-	return HttpResponse("")
+	return HttpResponseRedirect('/static/corman/home.html#/schedulr')
 
 @csrf_exempt
 def create_response(request):
@@ -75,7 +108,7 @@ def create_response(request):
 		answ = request.POST.__contains__(str(choice.id))
 		Response.create(user,choice,answ)
 
-	return HttpResponse("")
+	return HttpResponseRedirect('/static/corman/home.html#/schedulr')
 
 
 

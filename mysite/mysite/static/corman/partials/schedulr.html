@@ -1,25 +1,45 @@
-<h1>SCHEDULR</h1>
-<div style="width: 500px; margin: auto;">
-<accordion close-others="true">
-    <accordion-group heading="{{event.fields.description}}" ng-repeat="event in events" ng-click="getEventDetails(event.pk)">
-		<table class="table">
-			<tr>
-				<th class="centered_header">
-					<span class="glyphicon glyphicon-user header_icon"></span>
-            	</th>
-    			<th ng-repeat="ch in eventDetails.data.choice" class="centered_header">
-      				{{ch.fields.start | date: 'yyyy-MM-dd'}}<br>
-      				{{ch.fields.start | date: 'HH:mm'}}
-      			</th>
-      		</tr>
+<div class="container">
+  <tabset>
+    <tab heading="Your Events">
+      <br>
+        <accordion close-others="true">
+          <accordion-group heading="{{event.event_desc}}" ng-repeat="event in response.data.events">
+            <table class="table">
 
-      		<tr ng-repeat="user in eventDetails.data.response">
-      			<td class="user_column">{{user.user}}</td>
-      			<td ng-repeat="ans in user.answers" class="choice_{{ans.fields.free}}">
-      			</td>
-      		<tr>
+              <tr class="row">
+                <th class="centered_header col-md-2">
+                  <br>
+                  <span class="glyphicon glyphicon-user header_icon"></span>
+                </th>
+                <th ng-repeat="choice in event.choices" class="centered_header col-md-1">
+                  {{choice.fields.start | date: 'yyyy-MM-dd'}}<br>
+                  {{choice.fields.start | date: 'HH:mm'}}
+                </th>
+              </tr>
 
-  		</table>
-    </accordion-group>
-</accordion>
+              <tr class="row" ng-repeat="user in event.responses">
+                <td class="user_column">{{user.user}}</td>
+                <td ng-repeat="ans in user.answers" class="choice_{{ans.fields.free}}"></td>
+              </tr>
+            </table>
+
+          </accordion-group>
+        </accordion>
+    </tab>
+
+    <tab heading="Create new event">
+      <form method="post" action="/schedulr/create/">
+        <input name="eventDesc" type="text">
+        <div ng-controller="AlertDemoCtrl">
+          <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
+            <input name="choiceTime_{{$index}}" type="time">
+            <input name="choiceDate_{{$index}}" type="date">
+          </alert>
+          <button type="button" class='btn btn-default' ng-click="addAlert()">Add Alert</button>
+        </div>
+        <br>
+        <input type="submit" value="Create">
+      </form>
+    </tab>
+  </tabset>
 </div>

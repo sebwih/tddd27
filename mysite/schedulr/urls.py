@@ -10,4 +10,5 @@ urlpatterns = patterns('',
 	url(r'^get_event_data/', views.get_event_data, name='get_event_data'),
 	url(r'^create/', views.create, name='create'),
 	url(r'^create_response/', views.create_response, name='create_response'),
+	url(r'^get_all_events/', views.get_all_events, name='get_all_events'),
 )
