@@ -54,21 +54,12 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
                       controller: 'BookingDetailCtrl'});
   };
 
-  $scope.alertOnDayClick = function(date,allDay,jsEvent,view){
-      
-  };
-
-
   $scope.alertOnSelect = function(startDate, endDate, allDay,jsEvent,view){
       $scope.startDate = $filter('date')(startDate, 'yyyy-MM-dd HH:mm:ss Z'); 
       $scope.endDate = $filter('date')(endDate, 'yyyy-MM-dd HH:mm:ss Z');
       ngDialog.open({ template: 'partials/booking_dialog.html',
                       scope: $scope,
                       controller: 'DateCtrl'});
-  }; 
-
-  $scope.alertOnUnselect = function(jsEvent,view){
-      console.log('UNSELECT');
   }; 
 
 /* config object */
@@ -87,6 +78,7 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
       selectable: true,
       selectHelper: true,
       unselectAuto: true,
+      
       ignoreTimezone: false,
       firstDay: 1,
       header:{
@@ -103,14 +95,18 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
     }
   };
 
-  //INIT ORDENTLIGT!
-  $scope.currentResource = 1
 
-  $scope.resources;
 
   $http.get('/bookings/get_resources').success(function(data){
-      $scope.resources = data;
+    $scope.resources = data;
+    $scope.currentResource = data.data[0].id
   });
+
+  //INIT ORDENTLIGT!
+
+  $scope.currentResource = 1
+
+  
 
   $scope.showResource = function(id,calendar,resource,index){
     resource['open'] = !resource['open']
@@ -131,9 +127,19 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
 
   $scope.eventSources = [$scope.eventSource];
 
-  ///////////////////////////////////////////////////////////////////////
+    $scope.bookResource = function(form){
+    // console.log(form.endDate)
+    $http({
+            method: 'POST',
+            url: '/bookings/book_resource/',
+            data: form,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}}).success(function(data){
+        
+        $scope.booking_response = data;
+      });
+    }
 
-  //////////////////////////////////////////////////////////////////////
+
 });
 
 cormanControllers.controller('DateCtrl', function ($scope, $http){
@@ -164,7 +170,6 @@ cormanControllers.controller('DateCtrl', function ($scope, $http){
     $scope.BookingEndDate = new Date($scope.endDate);
   };
 
-
 //clear() ? Hur funkar den och hur ska det funka pa flera datepickers?
   
   $scope.initEnd();
@@ -182,16 +187,9 @@ cormanControllers.controller('DateCtrl', function ($scope, $http){
   });
 
 cormanControllers.controller('SchedulrCtrl', function ($scope, $routeParams, $http){
-  $http.get('/schedulr/get_user_events').success(function(data){
-    $scope.events = data;
+  $http.get('/schedulr/get_all_events').success(function(data){
+    $scope.response = data;
   });
-
-  $scope.getEventDetails = function(eventId){
-    console.log(eventId);
-    $http.get('/schedulr/get_event_data?eventId=' + eventId).success(function(data){
-      $scope.eventDetails = data
-    });
-  }
 });
 
 function AlertDemoCtrl($scope) {
@@ -215,10 +213,9 @@ function AlertDemoCtrl($scope) {
 
 cormanControllers.controller('SchedulrAnswerCtrl', function ($scope, $routeParams, $http){
   
-  $scope.eventId = $routeParams.eventId;
+  $scope.eventUrl = $routeParams.eventUrl;
 
-  $http.get('/schedulr/get_event_data?eventId=' + $scope.eventId).success(function(data){
+  $http.get('/schedulr/get_event_data?url=' + $scope.eventUrl).success(function(data){
       $scope.eventDetails = data
   });
-
 });

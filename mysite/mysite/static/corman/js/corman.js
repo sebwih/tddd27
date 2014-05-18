@@ -23,13 +23,13 @@ cormanApp.config(['$routeProvider',
         templateUrl: 'partials/resource_details.html',
         controller: 'ResourceDetailCtrl'        
       }).
-      when('/schedulr/answer/:eventId', {
+      when('/schedulr/answer/:eventUrl', {
         templateUrl: 'partials/schedulr_answer.html',
         controller: 'SchedulrAnswerCtrl'      
       }).
       when('/calendar', {
-      templateUrl: 'partials/calendar.html',
-      controller: 'CalendarCtrl'        
+        templateUrl: 'partials/calendar.html',
+        controller: 'CalendarCtrl'
       }).
       when('/my_bookings', {
       templateUrl: 'partials/user_bookings.html',
