@@ -30,6 +30,8 @@ def get_user_bookings(request):
 
 	bookings = Booking.objects.filter(user=request.user.id)
 	response['data'] = json.loads(serializers.serialize("json", bookings))
+	for elem in response['data']:
+		elem['fields']['resource'] = Resource.objects.get(id=elem['fields']['resource']).name
 
 	return HttpResponse(json.dumps(response), content_type="application/json")
 

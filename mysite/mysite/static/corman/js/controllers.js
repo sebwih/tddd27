@@ -21,7 +21,13 @@ cormanControllers.controller('loginCtrl', function ($scope, $http, $rootScope) {
       if(data.success){
         $rootScope.logged_in = true;
         $scope.showView = true;
-      } else{
+        if (data.user !== 'Administrator'){
+          $rootScope.user_pic = data.picture;
+        } else {
+          $rootScope.user_pic = "";
+        }
+        $rootScope.logged_in_user= data.user;
+      }else{
         $rootScope.logged_in = false;
         $scope.showView = true;
       }
@@ -45,7 +51,7 @@ cormanControllers.controller('UserBookingsCtrl', function ($scope, $routeParams,
 });
 
 
-cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $http, $filter,ngDialog){
+cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $http, $filter,ngDialog,datasets){
 
   $scope.alertOnEventClick = function( event, allDay, jsEvent, view ){
     $scope.bookingId = event.id;
@@ -103,14 +109,8 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
     }
   };
 
-  //INIT ORDENTLIGT!
-  $scope.currentResource = 1
-
-  $scope.resources;
-
-  $http.get('/bookings/get_resources').success(function(data){
-      $scope.resources = data;
-  });
+  $scope.resources = datasets.data;
+  $scope.currentResource = $scope.resources.data[0].id
 
   $scope.showResource = function(id,calendar,resource){
     resource['open'] = !resource['open']
