@@ -4,19 +4,17 @@ var cormanApp = angular.module('cormanApp', [
   'ui.calendar',
   'ui.bootstrap',
   'ngDialog',
-  'ngCookies',
 ]);
 
 
-cormanApp.run(function ($rootScope,$location,$http,$cookies) {
+cormanApp.run(function ($rootScope,$location) {
     $rootScope.isActive = function (viewLocation) { 
         return (viewLocation === $location.path()) && $rootScope.logged_in;
     };
-    //$http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
   });
 
-cormanApp.config(['$routeProvider','$httpProvider',
-  function($routeProvider,$httpProvider) {
+cormanApp.config(['$routeProvider',
+  function($routeProvider) {
     $routeProvider.
       when('/resources', {
         templateUrl: 'partials/resource_list.html',
@@ -58,5 +56,4 @@ cormanApp.config(['$routeProvider','$httpProvider',
         redirectTo: '/calendar'
       });
 
-      //$httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
   }]);
