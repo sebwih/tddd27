@@ -1,13 +1,6 @@
 var cormanControllers = angular.module('cormanControllers', []);
 
-cormanControllers.controller('BookingListCtrl', function ($scope, $http) {
-	$http.get('/bookings/get_bookings').success(function(data) {
-      $scope.bookings = data;
-    });
-});
-
-
-cormanControllers.controller('BookingDetailCtrl', function ($scope, $routeParams, $http) {
+cormanControllers.controller('BookingDetailCtrl', function ($scope, $http) {
       $http.get('/bookings/get_booking_details/?id='+$scope.bookingId).success(function(data) {
       $scope.booking = data;
       $scope.booked = new Date($scope.booking.data.booked)
@@ -34,16 +27,7 @@ cormanControllers.controller('loginCtrl', function ($scope, $http, $rootScope) {
     });
  });
 
-
-cormanControllers.controller('ResourceDetailCtrl', function ($scope, $routeParams, $http){
-  $scope.resourceName = $routeParams.resourceName;
-  $http.post('/bookings/get_resource_bookings/',{"name":$routeParams.resourceName}).success(function(data){
-    $scope.resource_bookings = data;
-  });  
-});
-
-
-cormanControllers.controller('UserBookingsCtrl', function ($scope, $routeParams, $http){
+cormanControllers.controller('UserBookingsCtrl', function ($scope, $http){
   $scope.resourceName = $routeParams.resourceName;
   $http.get('/bookings/get_user_bookings').success(function(data){
     $scope.user_bookings = data;
@@ -51,7 +35,7 @@ cormanControllers.controller('UserBookingsCtrl', function ($scope, $routeParams,
 });
 
 
-cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $http, $filter,ngDialog,datasets,$location){
+cormanControllers.controller('CalendarCtrl', function ($scope, $http, $filter,ngDialog,datasets,$location){
 
   $scope.alertOnEventClick = function( event, allDay, jsEvent, view ){
     $scope.bookingId = event.id;
@@ -93,11 +77,7 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
         right: 'prev,next'
       },
       eventClick: $scope.alertOnEventClick,
-      eventDrop: $scope.alertOnDrop,
-      dayClick: $scope.alertOnDayClick,
-      eventResize: $scope.alertOnResize,
       select: $scope.alertOnSelect,
-      unselect: $scope.alertOnUnselect
     }
   };
 
@@ -161,8 +141,6 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
 
 cormanControllers.controller('DateCtrl', function ($scope, $http, $filter){
 
-  //Kopierad kod? Skapa en funktion som kan anvandas av bada datepickers?
-
   $scope.form = {}
 
   $scope.openStart = function($event) {
@@ -208,8 +186,6 @@ cormanControllers.controller('DateCtrl', function ($scope, $http, $filter){
     }
     return false
   }
-
-//clear() ? Hur funkar den och hur ska det funka pa flera datepickers?
   
   $scope.initEnd();
 
@@ -218,14 +194,12 @@ cormanControllers.controller('DateCtrl', function ($scope, $http, $filter){
     startingDay: 1
   };
 
-  //------------------------------------------------
-
   $scope.form['startTime'] = new Date($scope.startDate);
   $scope.form['endTime'] = new Date($scope.endDate);
 
   });
 
-cormanControllers.controller('SchedulrCtrl', function ($scope, $routeParams, $http){
+cormanControllers.controller('SchedulrCtrl', function ($scope, $http){
   $http.get('/schedulr/get_all_events').success(function(data){
     $scope.response = data;
   });

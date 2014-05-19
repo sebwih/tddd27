@@ -65,18 +65,22 @@ def get_all_events(request):
 
 		users = Response.objects.filter(Q(choice=choices)).values("user").distinct()
 
-		blubb = []
+		event_info = []
 
 		for user in users:
 
-			blubb += [{'user' : user['user'], 
+			event_info += [{'user' : user['user'], 
 						'answers' : json.loads(serializers.serialize("json",Response.objects.filter(Q(choice=choices),
 																							Q(user=user['user'])).order_by('choice')))}]
 
-		temp_event += [{'id' : event.id, 'event_desc' : event.description, "url" : event.url, 'choices' : json.loads(serializers.serialize("json", choices)), 'responses' : blubb}]
+		all_events += [{'id' 			: event.id, 
+						'event_desc' 	: event.description, 
+						"url" 			: event.url, 
+						'choices' 		: json.loads(serializers.serialize("json", choices)),
+						'responses' 	: event_info}]
 
 	response = {}
-	response['data'] = {'events' : temp_event}
+	response['data'] = {'events' : all_events}
 
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
@@ -117,28 +121,4 @@ def create_response(request):
 		Response.create(user,choice,answ)
 
 	return HttpResponseRedirect('/static/corman/home.html#/schedulr')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	

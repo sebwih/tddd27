@@ -4,8 +4,6 @@ import datetime
 import random
 import string
 
-# Create your models here.
-
 class Event(models.Model):
     description = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)

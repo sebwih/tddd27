@@ -11,23 +11,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
 @login_required()
-def get_bookings(request):
-	response = {}
-	response['success'] = True
-	
-	bookings = Booking.objects.all()
-
-	booking_list = []
-	for booking in bookings:
-		booking_list.append({'id' : booking.id, 'start' : str(booking.start_time), 'end' : str(booking.end_date)})
-
-	response['data'] = booking_list
-
-	return HttpResponse(json.dumps(response), content_type="application/json")
-
-@login_required()
 def get_user_bookings(request):
-	
 	response = {}
 	response['success'] = True
 
@@ -38,7 +22,6 @@ def get_user_bookings(request):
 
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
-#Anvands denna?
 @login_required()
 def get_resources(request):
 	response = {}
@@ -51,6 +34,7 @@ def get_resources(request):
 @login_required()
 @csrf_exempt
 def get_resource_bookings(request):
+	print "get_resource_bookings"
 	obj = json.loads(request.body)
 	resource = Resource.objects.get(name=obj["name"])
 	bookings = Booking.objects.filter(resource=resource)
@@ -112,7 +96,6 @@ def check_booking(start,end, resource_id):
 
 @login_required()
 def get_booking_details(request):
-	
 	booking_id = request.GET['id']
 
 	booking = Booking.objects.get(id=booking_id)
