@@ -1,0 +1,11 @@
+<h2>Boka {{resourceName}}</h2>
+<form  ng-submit="bookResource(form)" accept-charset="UTF-8" novalidate>
+  <input ng-model="form.startDate" type="date">
+  <input ng-model="form.startTime" type="time"><br>
+  <input ng-model="form.endDate" type="date">
+  <input ng-model="form.endTime" type="time"><br>
+  <input type="text" ng-model="form.msg" name="msg"><br>
+  <input type="hidden" required ng-model="form.resourceId" name="resourceId" value="{{currentResource}}">
+  <input type="submit" value="Reserve">
+</form>
+

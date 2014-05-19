@@ -51,7 +51,7 @@ cormanControllers.controller('UserBookingsCtrl', function ($scope, $routeParams,
 });
 
 
-cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $http, $filter,ngDialog,datasets){
+cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $http, $filter,ngDialog,datasets,$location){
 
   $scope.alertOnEventClick = function( event, allDay, jsEvent, view ){
     $scope.bookingId = event.id;
@@ -122,17 +122,33 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
   }; 
 
   $scope.eventSources = [$scope.eventSource];
+  $scope.booking_response = {}
+  $scope.booking_response['success'] = true;
 
     $scope.bookResource = function(form){
-    // console.log(form.endDate)
+    form['resourceId']=$scope.currentResource
+    form['startDate'] = $filter('date')(form['startDate'], 'yyyy-MM-dd')
+    form['startTime'] = $filter('date')(form['startTime'], 'HH:mm:ss')
+    form['endDate'] = $filter('date')(form['endDate'], 'yyyy-MM-dd')
+    form['endTime'] = $filter('date')(form['endTime'], 'HH:mm:ss')
+    console.log(JSON.stringify(form))
     $http({
             method: 'POST',
             url: '/bookings/book_resource/',
-            data: form,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}}).success(function(data){
-        
-        $scope.booking_response = data;
-      });
+            data: JSON.stringify(form)
+    }).
+    success(function(data){
+      console.log(data)
+      ngDialog.closeAll()  
+      $scope.booking_response = data;
+      if (!$scope.booking_response.success){
+        ngDialog.open({ template: 'partials/booking_failed.html'});
+      }
+      $location.path('#/calendar')
+    }).
+    error(function(data){
+      console.log(data);
+    })
     }
 
 
@@ -141,6 +157,8 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
 cormanControllers.controller('DateCtrl', function ($scope, $http){
 
   //Kopierad kod? Skapa en funktion som kan anvandas av bada datepickers?
+
+  $scope.form = {}
 
   $scope.openStart = function($event) {
     $event.preventDefault();
@@ -157,13 +175,13 @@ cormanControllers.controller('DateCtrl', function ($scope, $http){
   };
 
   $scope.initStart = function() {
-    $scope.BookingStartDate = new Date($scope.startDate);
+    $scope.form['startDate'] = new Date($scope.startDate);
   };
   
   $scope.initStart();
 
   $scope.initEnd = function() {
-    $scope.BookingEndDate = new Date($scope.endDate);
+    $scope.form['endDate'] = new Date($scope.endDate);
   };
 
 //clear() ? Hur funkar den och hur ska det funka pa flera datepickers?
@@ -177,8 +195,8 @@ cormanControllers.controller('DateCtrl', function ($scope, $http){
 
   //------------------------------------------------
 
-  $scope.BookingStartTime = new Date($scope.startDate);
-  $scope.BookingEndTime = new Date($scope.endDate);
+  $scope.form['startTime'] = new Date($scope.startDate);
+  $scope.form['endTime'] = new Date($scope.endDate);
 
   });
 
