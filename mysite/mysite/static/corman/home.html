@@ -19,9 +19,7 @@
     <link rel="shortcut icon" type="image/png" href="img/browse_icon.png">
     <title>CORMAN -Common resource management</title>
 </head>
-
 <body>
-
   <nav class="navbar navbar-default" role="navigation">
     <div class="navbar-header">
       <a class="navbar-brand">CORMAN</a>
@@ -36,12 +34,11 @@
         <li><a href="#/my_bookings"><img src="{{user_pic}}" style="margin-top:-7px; max-width:25px; max-height: 25px" class="img-circle"> {{logged_in_user}}</a></li>
         <li id="sign-out" ng-show="logged_in"><a href="http://localhost:8000/logout">Sign out</a></li>
       </ul>
-  </div>
-</nav>
+    </div>
+  </nav>
 
 <div ng-show="showView">
   <div ng-if ="logged_in"ng-view></div>
-
 	<div ng-cloak ng-if="!logged_in">
     <div class="content">
       <div class="container">

@@ -3,7 +3,7 @@
 		<div class="col-md-3 spacer left-side-padding">
 		  	<accordion close-others="true">
 		    	<accordion-group class="accordion-toggle" ng-click="showResource(resource.id,myCalendar1,resource)" ng-repeat="resource in resources.data" is-open="resource.open">
-		    	<accordion-heading><span ng-click="showResource(resource.id,myCalendar1,resource,$index)">{{resource.name}}<span></accordion-heading>
+		    		<accordion-heading><span ng-click="showResource(resource.id,myCalendar1,resource,$index)">{{resource.name}}<span></accordion-heading>
 		   	 		{{resource.description}}
 		    	</accordion-group>
 		  	</accordion>
@@ -11,6 +11,5 @@
 		<div class="col-md-9 right-side-padding">
 			<div class="calendar" ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
 		</div>
-		
 	</div>
 </div>

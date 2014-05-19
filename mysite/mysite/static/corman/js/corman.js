@@ -6,7 +6,6 @@ var cormanApp = angular.module('cormanApp', [
   'ngDialog',
 ]);
 
-
 cormanApp.run(function ($rootScope,$location) {
     $rootScope.isActive = function (viewLocation) { 
         return (viewLocation === $location.path()) && $rootScope.logged_in;
@@ -16,14 +15,6 @@ cormanApp.run(function ($rootScope,$location) {
 cormanApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      when('/resources', {
-        templateUrl: 'partials/resource_list.html',
-        controller: 'ResourceListCtrl'
-      }).
-      when('/resources/:resourceName', {
-        templateUrl: 'partials/resource_details.html',
-        controller: 'ResourceDetailCtrl'        
-      }).
       when('/schedulr/answer/:eventUrl', {
         templateUrl: 'partials/schedulr_answer.html',
         controller: 'SchedulrAnswerCtrl'      
@@ -55,5 +46,4 @@ cormanApp.config(['$routeProvider',
       otherwise({
         redirectTo: '/calendar'
       });
-
   }]);
