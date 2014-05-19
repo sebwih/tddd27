@@ -6,11 +6,12 @@ var cormanApp = angular.module('cormanApp', [
   'ngDialog',
 ]);
 
-cormanApp.run(function($rootScope,$location) {
+
+cormanApp.run(function ($rootScope,$location) {
     $rootScope.isActive = function (viewLocation) { 
         return (viewLocation === $location.path()) && $rootScope.logged_in;
     };
-})
+  });
 
 cormanApp.config(['$routeProvider',
   function($routeProvider) {
@@ -28,8 +29,13 @@ cormanApp.config(['$routeProvider',
         controller: 'SchedulrAnswerCtrl'      
       }).
       when('/calendar', {
-        templateUrl: 'partials/calendar.html',
-        controller: 'CalendarCtrl'
+      templateUrl: 'partials/calendar.html',
+      controller: 'CalendarCtrl',
+      resolve : {
+        datasets: function($q,$http){
+          return $http.get('/bookings/get_resources')
+        }
+      }
       }).
       when('/my_bookings', {
       templateUrl: 'partials/user_bookings.html',
@@ -49,4 +55,5 @@ cormanApp.config(['$routeProvider',
       otherwise({
         redirectTo: '/calendar'
       });
+
   }]);

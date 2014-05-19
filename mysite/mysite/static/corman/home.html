@@ -16,6 +16,8 @@
   	<link rel="stylesheet" type="text/css" href="css/fullcalendar.css">
     <link rel="stylesheet" type="text/css" href="css/schedulr.css">
     <link rel="stylesheet" type="text/css" href="css/corman.css">
+    <link rel="shortcut icon" type="image/png" href="img/browse_icon.png">
+    <title>CORMAN -Common resource management</title>
 </head>
 
 <body>
@@ -31,6 +33,7 @@
         <li ng-class="{ active: isActive('/schedulr')}"><a href="#/schedulr">Schedulr</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="#/my_bookings"><img src="{{user_pic}}" style="margin-top:-7px; max-width:25px; max-height: 25px" class="img-circle"> {{logged_in_user}}</a></li>
         <li id="sign-out" ng-show="logged_in"><a href="http://localhost:8000/logout">Sign out</a></li>
       </ul>
   </div>
