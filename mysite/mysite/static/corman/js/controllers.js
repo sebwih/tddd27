@@ -155,7 +155,7 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
     }
 });
 
-cormanControllers.controller('DateCtrl', function ($scope, $http){
+cormanControllers.controller('DateCtrl', function ($scope, $http, $filter){
 
   //Kopierad kod? Skapa en funktion som kan anvandas av bada datepickers?
 
@@ -184,6 +184,26 @@ cormanControllers.controller('DateCtrl', function ($scope, $http){
   $scope.initEnd = function() {
     $scope.form['endDate'] = new Date($scope.endDate);
   };
+
+  $scope.formValidate = function(form) {
+
+    start_date  =   $filter('date')(form.startDate.$modelValue, 'yyyy-MM-dd')
+    start_time  =   $filter('date')(form.startTime.$modelValue, 'HH:mm:ss')
+    end_date    =   $filter('date')(form.endDate.$modelValue, 'yyyy-MM-dd')
+    end_time    =   $filter('date')(form.endTime.$modelValue, 'HH:mm:ss')
+    
+
+    if(start_date < end_date){
+      return true
+    }
+
+    if(start_date === end_date){
+      if(start_time < end_time){
+        return true
+      }
+    }
+    return false
+  }
 
 //clear() ? Hur funkar den och hur ska det funka pa flera datepickers?
   
