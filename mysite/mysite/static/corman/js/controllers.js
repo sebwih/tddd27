@@ -27,7 +27,7 @@ cormanControllers.controller('loginCtrl', function ($scope, $http, $rootScope) {
     });
  });
 
-cormanControllers.controller('UserBookingsCtrl', function ($scope, $http){
+cormanControllers.controller('UserBookingsCtrl', function ($scope, $routeParams,$http){
   $scope.resourceName = $routeParams.resourceName;
   $http.get('/bookings/get_user_bookings').success(function(data){
     $scope.user_bookings = data;
