@@ -55,7 +55,7 @@ def get_all_events(request):
 	user = User.objects.get(id=user_id)
 	events = Event.objects.filter(Q(user=user))
 
-	temp_event = []
+	all_events = []
 	
 	for event in events:
 
