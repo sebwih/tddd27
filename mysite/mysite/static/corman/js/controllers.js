@@ -104,11 +104,13 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
 
   $scope.resources = datasets.data;
   $scope.currentResource = $scope.resources.data[0].id
+  $scope.currentResourceName = $scope.resources.data[0].name
 
   $scope.showResource = function(id,calendar,resource){
     resource['open'] = !resource['open']
     if($scope.currentResource !== id){
       $scope.currentResource = id;
+      $scope.currentResourceName = $scope.resources.data[id].name
       calendar.fullCalendar('refetchEvents')
     }
   }

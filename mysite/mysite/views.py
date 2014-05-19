@@ -12,7 +12,6 @@ from django.shortcuts import render
 from django.template import Template, RequestContext, loader
 
 def user_logged_in(request):
-	
 	if request.user.is_authenticated():
 		response = {}
 		response['success'] = True

@@ -127,6 +127,8 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'mysite/templates')]
 
 LOGIN_REDIRECT_URL = '/static/corman/home.html'
 
+LOGIN_URL = '/static/corman/home.html'
+
 SITE_ID = 2
 
 

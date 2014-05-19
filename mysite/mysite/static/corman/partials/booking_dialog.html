@@ -1,8 +1,8 @@
-<h2>Boka {{resourceName}}</h2>
+<!-- <h2>Book "{{currentResourceName}}"</h2>
 <form name="booking_form" ng-submit="bookResource(form)" accept-charset="UTF-8" novalidate>
   <div class="container">
    <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-2">
           <p class="input-group">
            <label>Start Date:</label>
             <input type="text" name="startDate" class="form-control" datepicker-popup="'yyyy-MM-dd" ng-model="form.startDate" is-open="openedStart" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" show-button-bar="false">
@@ -16,16 +16,16 @@
   </div>
 
   <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-2">
           <p class="input-group">
             <input type="text" name="endDate" class="form-control" datepicker-popup="'yyyy-MM-dd" ng-model="form.endDate" is-open="openedEnd" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" show-button-bar="false" ng-required="true">
             <span class="input-group-btn">
               <button type="button" class="btn btn-default" ng-click="openEnd($event)">
                 <i class="glyphicon glyphicon-calendar"></i></button>
             </span>
+             </p>
             <timepicker name="endTime" ng-model="form.endTime" minute-step="30" show-meridian="false" readonly-input="true"></timepicker>
             <input type="hidden" name="endTime" value="{{endTime | date: 'HH:mm:ss'}}">
-          </p>
       </div>
   </div>
 
@@ -33,4 +33,52 @@
   <input type="hidden" name="resourceId" value="{{currentResource}}">
   <input type="submit" value="Reserve">
 </div>
+</form> -->
+
+<div class="panel panel-info">
+  <div class="panel-heading">{{currentResourceName}}</div>
+  <div class="panel-body">
+<form name="booking_form" ng-submit="bookResource(form)" accept-charset="UTF-8" novalidate>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2 booking-dialog">
+          <div class="input-group">
+            <input type="text" name="startDate" class="form-control" datepicker-popup="'yyyy-MM-dd" ng-model="form.startDate" is-open="openedStart" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" show-button-bar="false">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default form-control" ng-click="openStart($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </div>
+      </div>
+      <div class="col-md-2 booking-dialog">
+            <timepicker name="startTime" ng-model="form.startTime" minute-step="30" show-meridian="false" readonly-input="true"></timepicker>
+            <input type="hidden" name="startTime" value="{{form.startTime | date: 'HH:mm:ss'}}">
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 booking-dialog">
+          <div class="input-group">
+            <input type="text" name="endDate" class="form-control" datepicker-popup="'yyyy-MM-dd" ng-model="form.endDate" is-open="openedEnd" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" show-button-bar="false" ng-required="true">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default form-control" ng-click="openEnd($event)">
+                <i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </div>
+        </div>
+          <div class="col-md-2 booking-dialog">
+            <timepicker name="endTime" ng-model="form.endTime" minute-step="30" show-meridian="false" readonly-input="true"></timepicker>
+            <input type="hidden" name="endTime" value="{{endTime | date: 'HH:mm:ss'}}">
+          </div>
+      </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <input class="form-control" type="text" name="msg" ng-model="form.msg" required placeholder="Description">
+        <input type="hidden" name="resourceId" value="{{currentResource}}">
+        <br>
+        <input type="submit" value="Reserve">
+      </div>
+    </div>
+</div>
 </form>
+  </div>
+</div>

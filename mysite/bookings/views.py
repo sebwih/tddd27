@@ -8,7 +8,9 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import datetime
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
+@login_required()
 def get_bookings(request):
 	response = {}
 	response['success'] = True
@@ -23,6 +25,7 @@ def get_bookings(request):
 
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
+@login_required()
 def get_user_bookings(request):
 	
 	response = {}
@@ -36,6 +39,7 @@ def get_user_bookings(request):
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
 #Anvands denna?
+@login_required()
 def get_resources(request):
 	response = {}
 	response['success'] = True
@@ -44,6 +48,7 @@ def get_resources(request):
 		elem['open'] = False;
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
+@login_required()
 @csrf_exempt
 def get_resource_bookings(request):
 	obj = json.loads(request.body)
@@ -55,6 +60,7 @@ def get_resource_bookings(request):
 	response['data'] = json.loads(serializers.serialize("json", bookings))
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
+@login_required()
 @csrf_exempt
 def book_resource(request):
 	obj = json.loads(request.body)
@@ -104,6 +110,7 @@ def check_booking(start,end, resource_id):
 
 	return True
 
+@login_required()
 def get_booking_details(request):
 	
 	booking_id = request.GET['id']
@@ -117,6 +124,7 @@ def get_booking_details(request):
 
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
+@login_required()
 @csrf_exempt
 def remove_booking(request):
 	booking_id = request.POST['booking_id']
@@ -124,6 +132,7 @@ def remove_booking(request):
 	booking.delete()
 	return HttpResponseRedirect("/static/corman/home.html#/my_bookings")
 
+@login_required()
 @csrf_exempt
 def get_week_bookings(request):
 	start = request.GET['start']

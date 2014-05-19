@@ -11,3 +11,9 @@
 	font-size: 30px;
 }
 
+.booking-dialog {
+    float:none;
+    display:inline-block;
+    vertical-align:middle;
+    margin-right:3.5em;
+}

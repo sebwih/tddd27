@@ -20,29 +20,29 @@
 	</article>
 </ul>
  -->
-<div>
-  Search: <input ng-model="query.fields.resource">
-  <select ng-model="orderProp">
-  	<option value="" disabled selected>Sort by</option>
-    <option value="fields.resource">Resource</option>
-    <option value="fields.start_date">Start date</option>
-  </select>
-</div>
-
 
 <div class="container">
-<h1>User bookings</h1>
- <accordion close-others="onAtATime">
- 	<accordion-group heading="{{booking.fields.start_date | date:'yyyy-MM-dd, HH:mm'}} - {{booking.fields.end_date | date:'yyyy-MM-dd, HH:mm'}}" ng-repeat="booking in user_bookings.data | filter:query | orderBy:orderProp">
- 		<p>Start: {{booking.fields.start_date | date:'yyyy-MM-dd, HH:mm'}}
- 		<p>End: {{booking.fields.end_date | date:'yyyy-MM-dd, HH:mm'}}</p>
-		<p>Resource: {{booking.fields.resource}}</p>
-		<p>Message: {{booking.fields.message}}</p>
-		<form method="post" action="/bookings/remove_booking/" accept-charset="UTF-8">
-			<input type="hidden" name="booking_id" value="{{booking.pk}}">
-			<input type="hidden" name="resource_name" value="{{booking.fields.resource}}">
-			<input type="submit" value="Avboka" name="unreservation_button">
-		</form>
- 	</accordion-group>
- </accordion>
+	<div>
+	  Search: <input class="form-control "ng-model="query.fields.resource" placeholder="Search">
+	  <select ng-model="orderProp">
+	  	<option value="" disabled selected>Sort by</option>
+	    <option value="fields.resource">Resource</option>
+	    <option value="fields.start_date">Start date</option>
+	  </select>
+	</div>
+
+
+	 <accordion close-others="onAtATime">
+	 	<accordion-group heading="{{booking.fields.start_date | date:'yyyy-MM-dd, HH:mm'}} - {{booking.fields.end_date | date:'yyyy-MM-dd, HH:mm'}}" ng-repeat="booking in user_bookings.data | filter:query | orderBy:orderProp">
+	 		<p>Start: {{booking.fields.start_date | date:'yyyy-MM-dd, HH:mm'}}
+	 		<p>End: {{booking.fields.end_date | date:'yyyy-MM-dd, HH:mm'}}</p>
+			<p>Resource: {{booking.fields.resource}}</p>
+			<p>Message: {{booking.fields.message}}</p>
+			<form method="post" action="/bookings/remove_booking/" accept-charset="UTF-8">
+				<input type="hidden" name="booking_id" value="{{booking.pk}}">
+				<input type="hidden" name="resource_name" value="{{booking.fields.resource}}">
+				<input type="submit" value="Avboka" name="unreservation_button">
+			</form>
+	 	</accordion-group>
+	 </accordion>
 </div>
