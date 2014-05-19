@@ -22,24 +22,53 @@
                 <td ng-repeat="ans in user.answers" class="choice_{{ans.fields.free}}"></td>
               </tr>
             </table>
+            Url: /schedulr/answer/{{event.url}}
 
           </accordion-group>
         </accordion>
     </tab>
 
     <tab heading="Create new event">
-      <form method="post" action="/schedulr/create/">
-        <input name="eventDesc" type="text">
-        <div ng-controller="AlertDemoCtrl">
-          <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
-            <input name="choiceTime_{{$index}}" type="time">
-            <input name="choiceDate_{{$index}}" type="date">
-          </alert>
-          <button type="button" class='btn btn-default' ng-click="addAlert()">Add Alert</button>
-        </div>
-        <br>
-        <input type="submit" value="Create">
-      </form>
+      <br>
+      <div class="col-md-6 col-md-offset-3" ng-controller="ChoiceCtrl">
+        <form method="post" action="/schedulr/create/">
+
+          <div class="panel panel-primary">
+            <div class="panel-heading">Event name</div>
+              <div class="panel-body">
+                <input class="form-control" name="eventDesc" type="text" placeholder="Enter name of event">
+              </div>
+          </div>
+
+              <div class="panel panel-primary" ng-repeat="choice in choices">
+                <div class="panel-heading">
+                  Choice {{$index+1}}
+                  <span class="pull-right glyphicon glyphicon-remove" ng-click="closeChoice($index)"></span>
+                </div>
+                <div class="panel-body" ng-controller="DateCtrl">
+                  <div class="row">
+                    <div class="col-md-7 schdulr_choice_row">
+                      <div class="input-group">
+                        <input type="text" name="choiceDate_{{$index}}" class="form-control" datepicker-popup="'yyyy-MM-dd" ng-model="ChoiceDate" is-open="openedStart" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" show-button-bar="false">
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default form-control" ng-click="openStart($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-4 schdulr_choice_row">
+                      <timepicker name="startTime" ng-model="ChoiceTime" minute-step="15" show-meridian="false" readonly-input="true"></timepicker>
+                    </div>
+                  </div>
+
+                  <input name="choiceTime_{{$index}}" type="hidden" value="{{ChoiceTime | date: 'HH:mm'}}">
+                </div>
+              </div>
+          <div>
+            <button type="button" class='btn btn-primary' ng-click="addChoice()">Add choice</button>
+            <input class="pull-right btn btn-default" type="submit" value="Create event">
+          <div>
+        </form>
+      </div>
     </tab>
   </tabset>
 </div>

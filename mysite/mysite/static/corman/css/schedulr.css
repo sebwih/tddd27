@@ -35,3 +35,10 @@
 	background-color: #F0F0F0;
 	border: 2px solid white;
 }
+
+.schdulr_choice_row{
+	float :none;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: -4px;
+}

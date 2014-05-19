@@ -99,7 +99,6 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
 
   $http.get('/bookings/get_resources').success(function(data){
     $scope.resources = data;
-    $scope.currentResource = data.data[0].id
   });
 
   //INIT ORDENTLIGT!
@@ -124,19 +123,6 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
   }; 
 
   $scope.eventSources = [$scope.eventSource];
-
-    $scope.bookResource = function(form){
-    // console.log(form.endDate)
-    $http({
-            method: 'POST',
-            url: '/bookings/book_resource/',
-            data: form,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}}).success(function(data){
-        
-        $scope.booking_response = data;
-      });
-    }
-
 
 });
 
@@ -190,21 +176,21 @@ cormanControllers.controller('SchedulrCtrl', function ($scope, $routeParams, $ht
   });
 });
 
-function AlertDemoCtrl($scope) {
-  $scope.alerts = [
+function ChoiceCtrl($scope) {
+  $scope.choices = [{}
   ];
 
   $scope.choiceNumber = 1;
 
   $scope.ChoiceTime = new Date('2014-01-01 00:00')
 
-  $scope.addAlert = function() {
-    $scope.alerts.push({id: 1});
+  $scope.addChoice = function() {
+    $scope.choices.push({});
     $scope.choiceNumber += 1;
   };
 
-  $scope.closeAlert = function(index) {
-    $scope.alerts.splice(index, 1);
+  $scope.closeChoice = function(index) {
+    $scope.choices.splice(index, 1);
   };
 
 }

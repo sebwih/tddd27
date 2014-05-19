@@ -1,34 +1,40 @@
-<div style="width: 500px; margin: auto;" ng-show="eventDetails.success">
-<form method="post" action="/schedulr/create_response/">
-      <table class="table">
-      <tr>
-        <th class="centered_header">
+<div class="container" ng-show="eventDetails.success">
+  <form method="post" action="/schedulr/create_response/">
+    <table class="table">
+      
+      <tr class="row">
+        <th class="centered_header col-md-2">
           <span class="glyphicon glyphicon-user header_icon_answer"></span>
-              </th>
-          <th ng-repeat="ch in eventDetails.data.choice" class="centered_header">
-              {{ch.fields.start | date: 'yyyy-MM-dd'}}<br>
-              {{ch.fields.start | date: 'HH:mm'}}
-            </th>
-          </tr>
+        </th>
+        <th ng-repeat="ch in eventDetails.data.choice" class="centered_header col-md-1">
+          {{ch.fields.start | date: 'yyyy-MM-dd'}}<br>
+          {{ch.fields.start | date: 'HH:mm'}}
+        </th>
+      </tr>
 
-          <tr ng-repeat="user in eventDetails.data.response">
-            <td class="user_column">{{user.user}}</td>
-            <td ng-repeat="ans in user.answers" class="choice_{{ans.fields.free}}">
-            </td>
-          </tr>
+      <tr class="row" ng-repeat="user in eventDetails.data.response">
+        <td class="user_column">{{user.user}}</td>
+        <td ng-repeat="ans in user.answers" class="choice_{{ans.fields.free}}"></td>
+      </tr>
 
-          <tr>
-            <td class="schedulr_user_input"><input type="text" name="user" placeholder="Name" maxlength="30"></td>
-            <td class="schedulr_input schedulr_user_input" ng-repeat="ch in eventDetails.data.choice">
-            <input type="checkbox" name="{{ch.pk}}">
-            </td>
-          </tr>
+      <tr class="row">
+        <td class="schedulr_user_input"><input type="text" name="user" class="form-control" placeholder="Name" maxlength="30"></td>
+        <td class="schedulr_input schedulr_user_input" ng-repeat="ch in eventDetails.data.choice">
+        <input type="checkbox" name="{{ch.pk}}">
+        </td>
+      </tr>
 
-      <input type="hidden" name="eventId" value="{{eventId}}">
+      <tr class="row">
+        <td>
+          <input type="hidden" name="eventUrl" value="{{eventUrl}}">
+          <input type="submit" class="btn btn-primary" value="Submit">
+        <td>
+      </tr>
+
     </table>
-    <input type="submit" value="Send">
   </form>
 </div>
+
 <div ng-show="!eventDetails.success">
   <div class="content">
       <div class="container">

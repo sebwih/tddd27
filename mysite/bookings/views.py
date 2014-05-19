@@ -55,7 +55,6 @@ def get_resource_bookings(request):
 
 @csrf_exempt
 def book_resource(request):
-
 	start_date = request.POST['startDate']
 	start_time = request.POST['startTime']
 
@@ -77,7 +76,7 @@ def book_resource(request):
 	if not check_booking(start_date,end_date,resource_id):
 		response = {}
 		response['success'] = False
-		return HttpResponse(json.dumps(response), content_type="application/json")
+		return HttpResponseRedirect("/static/corman/home.html#/calendar")
 
 	user = User.objects.get(id=request.user.id)
 	Resource.create_booking(resource,user,start_date,end_date,msg)

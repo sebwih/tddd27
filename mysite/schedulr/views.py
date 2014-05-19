@@ -8,12 +8,15 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import datetime
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
+@login_required()
 def get_user_events(request):
 	user_id = request.user.id
 	user = User.objects.get(id=user_id)
 	events = Event.objects.filter(Q(user=user))
 	return HttpResponse(serializers.serialize("json", events), content_type="application/json")
+
 
 def get_event_data(request):
 	event_url = request.GET['url']
@@ -33,7 +36,6 @@ def get_event_data(request):
 	blubb = []
 
 	for user in users:
-		print user
 		blubb += [{'user' : user['user'], 
 				'answers' : json.loads(serializers.serialize("json",Response.objects.filter(Q(choice=choices),
 																							Q(user=user['user'])).order_by('choice')))}]
@@ -45,6 +47,7 @@ def get_event_data(request):
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
 
+@login_required()
 @csrf_exempt
 def get_all_events(request):
 
@@ -77,6 +80,7 @@ def get_all_events(request):
 
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
+@login_required()
 @csrf_exempt
 def create(request):
 	number_choices = (len(request.POST)-1)/2
@@ -90,6 +94,9 @@ def create(request):
 		start_time = request.POST['choiceTime_' + str(index)]
 		start_date = request.POST['choiceDate_' + str(index)]
 
+		print "Start Time: " + start_time
+		print "Start Date: " + start_date
+
 		start_date += (' ' + start_time)
 		start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d %H:%M')
 
@@ -99,7 +106,8 @@ def create(request):
 
 @csrf_exempt
 def create_response(request):
-	event_id = request.POST['eventId']
+	event_url = request.POST['eventUrl']
+	event_id = Event.objects.get(url=event_url)
 	user = request.POST['user']
 	choices = Choice.objects.filter(event=event_id)
 	print request.POST
