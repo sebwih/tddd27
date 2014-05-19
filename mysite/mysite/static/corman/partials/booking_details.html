@@ -1,6 +1,12 @@
-ID: {{bookingId}}<br>
-User: {{booking.data.user}}<br>
-Message: {{booking.data.message}}<br>
-Date Booked: {{booked | date: 'MMM dd HH:mm'}}<br>
-Start date of booking: {{bookingStart | date: 'MMM dd HH:mm'}}<br>
-End date of booking: {{bookingEnd | date: 'MMM dd HH:mm'}}
+<div class="panel panel-primary">
+  <div class="panel-heading">Event details</div>
+  <div class="panel-body">
+	<table class="table table-hover">
+		<tr><th>Start date:</th><td>{{bookingStart | date:'yyyy-MM-dd, HH:mm'}}</td></tr>
+		<tr><th>End date:</th><td>{{bookingEnd | date:'yyyy-MM-dd, HH:mm'}}</td></tr>
+		<tr><th>Date booked:</th><td>{{booked | date:'yyyy-MM-dd, HH:mm'}}</td></tr>
+		<tr><th>User:</th><td>{{booking.data.user}}</td></tr>
+		<tr><th>Description:</th><td>{{booking.data.message}}</td></tr>
+	</table>
+  </div>
+</div>

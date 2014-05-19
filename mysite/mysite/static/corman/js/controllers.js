@@ -104,6 +104,7 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
 
   $scope.resources = datasets.data;
   $scope.currentResource = $scope.resources.data[0].id
+  $scope.resources.data[0].open = true;
   $scope.currentResourceName = $scope.resources.data[0].name
 
   $scope.showResource = function(id,calendar,resource){
@@ -128,8 +129,6 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
   $scope.booking_response = {}
   $scope.booking_response['success'] = true;
 
-<<<<<<< HEAD
-=======
     $scope.bookResource = function(form){
     form['resourceId']=$scope.currentResource
     form['startDate'] = $filter('date')(form['startDate'], 'yyyy-MM-dd')
@@ -148,6 +147,8 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
       $scope.booking_response = data;
       if (!$scope.booking_response.success){
         ngDialog.open({ template: 'partials/booking_failed.html'});
+      } else {
+        ngDialog.open({ template: 'partials/booking_success.html'}); 
       }
       $location.path('#/calendar')
     }).
@@ -155,9 +156,6 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
       console.log(data);
     })
     }
-
-
->>>>>>> FETCH_HEAD
 });
 
 cormanControllers.controller('DateCtrl', function ($scope, $http){

@@ -35,7 +35,7 @@
 </div>
 </form> -->
 
-<div class="panel panel-info">
+<div class="panel panel-primary">
   <div class="panel-heading">{{currentResourceName}}</div>
   <div class="panel-body">
 <form name="booking_form" ng-submit="bookResource(form)" accept-charset="UTF-8" novalidate>
@@ -75,7 +75,7 @@
         <input class="form-control" type="text" name="msg" ng-model="form.msg" required placeholder="Description">
         <input type="hidden" name="resourceId" value="{{currentResource}}">
         <br>
-        <input type="submit" value="Reserve">
+        <input class="btn btn-primary" type="submit" value="Reserve">
       </div>
     </div>
 </div>
