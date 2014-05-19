@@ -128,9 +128,7 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
   $scope.booking_response = {}
   $scope.booking_response['success'] = true;
 
-<<<<<<< HEAD
-=======
-    $scope.bookResource = function(form){
+  $scope.bookResource = function(form){
     form['resourceId']=$scope.currentResource
     form['startDate'] = $filter('date')(form['startDate'], 'yyyy-MM-dd')
     form['startTime'] = $filter('date')(form['startTime'], 'HH:mm:ss')
@@ -155,9 +153,6 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $routeParams, $ht
       console.log(data);
     })
     }
-
-
->>>>>>> FETCH_HEAD
 });
 
 cormanControllers.controller('DateCtrl', function ($scope, $http){
