@@ -199,9 +199,10 @@ cormanControllers.controller('DateCtrl', function ($scope, $http, $filter){
 
   });
 
-cormanControllers.controller('SchedulrCtrl', function ($scope, $http){
+cormanControllers.controller('SchedulrCtrl', function ($scope, $http,$location){
   $http.get('/schedulr/get_all_events').success(function(data){
     $scope.response = data;
+    $scope.absUrl = $location.absUrl();
   });
 });
 
