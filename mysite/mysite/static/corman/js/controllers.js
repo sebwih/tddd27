@@ -83,15 +83,18 @@ cormanControllers.controller('CalendarCtrl', function ($scope, $http, $filter,ng
 
 
   $scope.resources = datasets.data;
-  $scope.currentResource = $scope.resources.data[0].id
+  $scope.currentResource = $scope.resources.data[0].id;
+  console.log($scope.currentResource)
   $scope.resources.data[0].open = true;
-  $scope.currentResourceName = $scope.resources.data[0].name
+  $scope.currentResourceName = $scope.resources.data[0].name;
 
-  $scope.showResource = function(id,calendar,resource){
+  $scope.showResource = function(id,calendar,resource, index){
     resource['open'] = !resource['open']
     if($scope.currentResource !== id){
       $scope.currentResource = id;
-      $scope.currentResourceName = $scope.resources.data[id].name
+      console.log('id: '+id);
+      console.log('scope: '+$scope.currentResource);
+      $scope.currentResourceName = $scope.resources.data[index].name
       calendar.fullCalendar('refetchEvents')
     }
   }
@@ -202,7 +205,9 @@ cormanControllers.controller('DateCtrl', function ($scope, $http, $filter){
 cormanControllers.controller('SchedulrCtrl', function ($scope, $http,$location){
   $http.get('/schedulr/get_all_events').success(function(data){
     $scope.response = data;
-    $scope.absUrl = $location.absUrl();
+    $scope.absUrl = $location.host()+':'+$location.port()+'/static/corman/schedulr.html#';
+    // Should use the below code on deployment
+    //$scope.absUrl = $location.absUrl();
   });
 });
 
