@@ -7,13 +7,14 @@ from allauth.socialaccount.models import SocialAccount
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 import json
+import sys
 
 def user_logged_in(request):
 	if request.user.is_authenticated():
 		response = {}
 		response['success'] = True
 		response['message'] = "user is logged in"
-		response['picture'] = SocialAccount.objects.get(id=request.user.id).extra_data['picture']
+                response['picture'] = SocialAccount.objects.get(user_id=request.user.id).extra_data['picture']
 		if request.user.is_superuser:
 			response['user'] = "Administrator"
 		else:
